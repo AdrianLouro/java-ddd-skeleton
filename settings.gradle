@@ -1,0 +1,4 @@
+rootProject.name = 'java-ddd-skeleton'
+include 'shared'
+include 'core'
+

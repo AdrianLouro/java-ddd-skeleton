@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'alouro'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(path: ':shared')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.+'
+    testImplementation 'org.mockito:mockito-core:4.+'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.+'
+}
+
+test {
+    useJUnitPlatform()
+}
