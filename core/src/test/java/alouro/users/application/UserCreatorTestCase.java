@@ -1,5 +1,7 @@
 package alouro.users.application;
 
+import alouro.domain.value_object.InvalidDateException;
+import alouro.domain.value_object.InvalidUuidException;
 import alouro.users.UsersModuleUnitTestCase;
 import alouro.users.domain.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +21,24 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
     }
 
     @Test
+    void should_not_create_users_with_invalid_uuid() {
+        assertThrows(InvalidUuidException.class, () -> new UserId("123456789"));
+    }
+
+    @Test
     void should_not_create_users_with_invalid_name() {
         assertThrows(UserNameTooShortException.class, () -> new UserName("0"));
 
         assertThrows(UserNameTooLongException.class, () -> new UserName("012345678901234567890123456789012"));
     }
+
+    @Test
+    void should_not_create_users_with_invalid_birth_date_format() {
+        this.shouldNowBe(LocalDateTime.parse("2022-01-01T00:00:00"));
+
+        assertThrows(InvalidDateException.class, () -> new UserBirthDate("01-01-2000", this.clock()));
+    }
+
 
     @Test
     void should_not_create_underage_users() {
