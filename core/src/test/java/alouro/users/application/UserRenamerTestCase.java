@@ -24,7 +24,7 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
 
         assertThrows(
                 UserNotFoundException.class,
-                () -> this.renamer.rename(UserIdObjectMother.random(), UserNameObjectMother.random())
+                () -> this.renamer.rename(UserIdObjectMother.random().value(), UserNameObjectMother.random().value())
         );
     }
 
@@ -36,7 +36,7 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
 
         this.shouldFind(user.id(), user);
 
-        this.renamer.rename(user.id(), user.name());
+        this.renamer.rename(user.id().value(), user.name().value());
 
         this.shouldNotPublishAnyDomainEvent();
     }
@@ -56,7 +56,7 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
 
         this.shouldFind(user.id(), user);
 
-        this.renamer.rename(user.id(), renamedUser.name());
+        this.renamer.rename(user.id().value(), renamedUser.name().value());
 
         this.shouldSave(renamedUser);
         this.shouldPublish(UserRenamedDomainEventObjectMother.create(user.id(), renamedUser.name()));

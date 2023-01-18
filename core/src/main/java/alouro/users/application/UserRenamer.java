@@ -19,9 +19,9 @@ public final class UserRenamer {
         this.domainEventPublisher = domainEventPublisher;
     }
 
-    public void rename(final UserId id, final UserName name) {
-        final var user = this.userFinder.find(id);
-        user.updateName(name);
+    public void rename(final String id, final String name) {
+        final var user = this.userFinder.find(new UserId(id));
+        user.updateName(new UserName(name)); // TODO: should the ValueObject be instantiated by the User ???
 
         this.userRepository.save(user);
 
