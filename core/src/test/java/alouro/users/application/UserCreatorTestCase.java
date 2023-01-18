@@ -1,6 +1,5 @@
 package alouro.users.application;
 
-import alouro.users.domain.UserCannotBeUnderageException;
 import alouro.users.UsersModuleUnitTestCase;
 import alouro.users.domain.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,7 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
     @BeforeEach
     void setUp() {
-        this.creator = new UserCreator(this.userRepository(), this.domainEventPublisher());
+        this.creator = new UserCreator(this.userRepository(), this.domainEventPublisher(), this.clock());
     }
 
     @Test
@@ -38,14 +37,15 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
         this.shouldNowBe(LocalDateTime.parse("2022-09-12T00:00:00"));
 
         final var user = UserObjectMother.create(
-                UserIdObjectMother.random(),
-                UserNameObjectMother.random(),
-                new UserBirthDate("2000-01-01", this.clock())
+                UserIdObjectMother.random().value(),
+                UserNameObjectMother.random().value(),
+                "2000-01-01",
+                this.clock()
         );
 
         final var event = UserCreatedDomainEventObjectMother.create(user.id(), user.name(), user.birthDate());
 
-        this.creator.create(user.id(), user.name(), user.birthDate());
+        this.creator.create(user.id().value(), user.name().value(), user.birthDate().value());
 
         this.shouldSave(user);
         this.shouldPublish(event);

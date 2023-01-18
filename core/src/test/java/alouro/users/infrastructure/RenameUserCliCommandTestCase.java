@@ -26,9 +26,10 @@ final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
         final var newName = "new name";
 
         final var updatedUser = UserObjectMother.create(
-                user.id(),
-                new UserName(newName),
-                user.birthDate()
+                user.id().value(),
+                new UserName(newName).value(),
+                user.birthDate().value(),
+                this.clock
         );
 
         this.persist(user);

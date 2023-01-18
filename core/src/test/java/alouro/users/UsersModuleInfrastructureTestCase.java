@@ -22,7 +22,7 @@ public abstract class UsersModuleInfrastructureTestCase {
         }
     };
 
-    protected UserCreator userCreator = new UserCreator(this.userRepository, this.domainEventPublisher);
+    protected UserCreator userCreator = new UserCreator(this.userRepository, this.domainEventPublisher, this.clock);
 
     protected UserRenamer userRenamer = new UserRenamer(this.userRepository, domainEventPublisher);
 

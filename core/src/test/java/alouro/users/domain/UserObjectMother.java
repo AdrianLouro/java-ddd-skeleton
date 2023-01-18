@@ -4,11 +4,16 @@ import alouro.domain.Clock;
 
 public final class UserObjectMother {
 
-    public static User create(final UserId id, final UserName name, final UserBirthDate birthDate) {
-        return new User(id, name, birthDate);
+    public static User create(final String id, final String name, final String birthDate, final Clock clock) {
+        return User.fromPrimitives(id, name, birthDate, clock);
     }
 
-    public static User random(Clock clock) {
-        return create(UserIdObjectMother.random(), UserNameObjectMother.random(), UserBirthDateObjectMother.random(clock));
+    public static User random(final Clock clock) {
+        return create(
+                UserIdObjectMother.random().value(),
+                UserNameObjectMother.random().value(),
+                UserBirthDateObjectMother.random(clock).value(),
+                clock
+        );
     }
 }

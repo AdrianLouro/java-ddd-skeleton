@@ -46,7 +46,13 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
         this.shouldNowBe(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         final var user = UserObjectMother.random(this.clock());
-        final var renamedUser = UserObjectMother.create(user.id(), UserNameObjectMother.create("Another name"), user.birthDate());
+
+        final var renamedUser = UserObjectMother.create(
+                user.id().value(),
+                UserNameObjectMother.create("Another name").value(),
+                user.birthDate().value(),
+                this.clock()
+        );
 
         this.shouldFind(user.id(), user);
 

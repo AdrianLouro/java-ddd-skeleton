@@ -2,6 +2,7 @@ package alouro.users.domain;
 
 
 import alouro.domain.AggregateRoot;
+import alouro.domain.Clock;
 
 import java.util.Objects;
 
@@ -11,16 +12,30 @@ public final class User extends AggregateRoot {
     private UserName name;
     private UserBirthDate birthDate;
 
-    public User(final UserId id, final UserName name, final UserBirthDate birthDate) {
+    private User(final UserId id, final UserName name, final UserBirthDate birthDate) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
     }
 
-    public static User create(final UserId id, final UserName name, final UserBirthDate birthDate) {
-        var user = new User(id, name, birthDate);
+    public static User fromPrimitives(final String id, final String name, final String birthDate, final Clock clock) {
+        return new User(
+                new UserId(id),
+                new UserName(name),
+                new UserBirthDate(birthDate, clock)
+        );
+    }
 
-        user.push(new UserCreatedDomainEvent(id.value(), name.value(), birthDate.value()));
+    public static User create(final String id, final String name, final String birthDate, final Clock clock) {
+        var user = fromPrimitives(id, name, birthDate, clock);
+
+        user.push(
+                new UserCreatedDomainEvent(
+                        user.id().value(),
+                        user.name().value(),
+                        user.birthDate().value()
+                )
+        );
 
         return user;
     }
