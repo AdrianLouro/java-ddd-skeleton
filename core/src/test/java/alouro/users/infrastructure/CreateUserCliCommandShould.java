@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-final class CreateUserCliCommandTestCase extends UsersModuleInfrastructureTestCase {
+final class CreateUserCliCommandShould extends UsersModuleInfrastructureTestCase {
 
     private CreateUserCliCommand cliCommand;
 
@@ -20,7 +20,7 @@ final class CreateUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
     }
 
     @Test
-    void should_create_user() {
+    void create_a_user() {
         final var user = UserObjectMother.random(this.clock);
 
         this.cliCommand.execute(

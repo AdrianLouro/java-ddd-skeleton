@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class UserCreatorTestCase extends UsersModuleUnitTestCase {
+final class UserCreatorShould extends UsersModuleUnitTestCase {
 
     private UserCreator creator;
 
@@ -21,19 +21,19 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
     }
 
     @Test
-    void should_not_create_users_with_invalid_uuid() {
+    void not_create_a_user_with_an_invalid_uuid() {
         assertThrows(InvalidUuidException.class, () -> new UserId("123456789"));
     }
 
     @Test
-    void should_not_create_users_with_invalid_name() {
+    void not_create_a_user_with_an_invalid_name() {
         assertThrows(UserNameTooShortException.class, () -> new UserName("0"));
 
         assertThrows(UserNameTooLongException.class, () -> new UserName("012345678901234567890123456789012"));
     }
 
     @Test
-    void should_not_create_users_with_invalid_birth_date_format() {
+    void not_create_a_user_with_invalid_birth_date_format() {
         this.shouldNowBe(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         assertThrows(InvalidDateException.class, () -> new UserBirthDate("01-01-2000", this.clock()));
@@ -41,14 +41,14 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
 
     @Test
-    void should_not_create_underage_users() {
+    void not_create_an_underage_user() {
         this.shouldNowBe(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         assertThrows(UserCannotBeUnderageException.class, () -> new UserBirthDate("2022-01-01", this.clock()));
     }
 
     @Test
-    void should_create_users() {
+    void create_a_user() {
         this.shouldNowBe(LocalDateTime.parse("2022-09-12T00:00:00"));
 
         final var user = UserObjectMother.create(
