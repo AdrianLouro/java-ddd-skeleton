@@ -29,7 +29,7 @@ public abstract class UsersModuleInfrastructureTestCase {
 
     protected UserRenamer userRenamer = new UserRenamer(this.userRepository, domainEventPublisher);
 
-    protected void persist(final User user) {
+    protected void save(final User user) {
         this.userRepository.save(user);
     }
 

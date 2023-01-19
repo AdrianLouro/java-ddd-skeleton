@@ -33,7 +33,7 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
     @Test
     void should_not_create_a_user_with_invalid_birth_date_format() {
-        this.shouldNowBe(LocalDateTime.parse("2022-01-01T00:00:00"));
+        this.givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         assertThrows(InvalidDateException.class, () -> new UserBirthDate("01-01-2000", this.clock()));
     }
@@ -41,14 +41,14 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
     @Test
     void should_not_create_an_underage_user() {
-        this.shouldNowBe(LocalDateTime.parse("2022-01-01T00:00:00"));
+        this.givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         assertThrows(UserCannotBeUnderageException.class, () -> new UserBirthDate("2022-01-01", this.clock()));
     }
 
     @Test
     void should_create_a_user() {
-        this.shouldNowBe(LocalDateTime.parse("2022-09-12T00:00:00"));
+        this.givenACurrentDate(LocalDateTime.parse("2022-09-12T00:00:00"));
 
         final var user = UserObjectMother.random(this.clock());
         final var event = UserCreatedDomainEventObjectMother.from(user);

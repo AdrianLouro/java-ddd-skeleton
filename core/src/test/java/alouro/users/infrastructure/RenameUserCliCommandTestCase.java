@@ -29,7 +29,7 @@ final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
                 .withName(newName)
                 .build();
 
-        this.persist(user);
+        this.save(user);
 
         this.cliCommand.execute(
                 Map.ofEntries(
