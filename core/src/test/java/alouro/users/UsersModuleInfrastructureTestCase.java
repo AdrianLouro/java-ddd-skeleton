@@ -8,10 +8,13 @@ import alouro.users.application.UserCreator;
 import alouro.users.application.UserRenamer;
 import alouro.users.domain.User;
 import alouro.users.infrastructure.InMemoryUserRepository;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.List;
 import java.util.Optional;
 
+@TestMethodOrder(MethodOrderer.Random.class)
 public abstract class UsersModuleInfrastructureTestCase {
     protected Clock clock = new SystemClock();
     protected InMemoryUserRepository userRepository = new InMemoryUserRepository();

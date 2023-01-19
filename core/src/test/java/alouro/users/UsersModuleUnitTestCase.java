@@ -4,6 +4,8 @@ import alouro.domain.Clock;
 import alouro.domain.DomainEvent;
 import alouro.domain.DomainEventPublisher;
 import alouro.users.domain.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
+@TestMethodOrder(MethodOrderer.Random.class)
 public abstract class UsersModuleUnitTestCase {
     private Clock clock;
     private DomainEventPublisher domainEventPublisher;

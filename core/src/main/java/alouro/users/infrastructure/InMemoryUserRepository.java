@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * This could be a test fake instead of production code.
+ * For now, it is production code in order to have an integration test example.
+ */
 public final class InMemoryUserRepository implements UserRepository {
 
     private final Map<String, User> users = new HashMap<>();

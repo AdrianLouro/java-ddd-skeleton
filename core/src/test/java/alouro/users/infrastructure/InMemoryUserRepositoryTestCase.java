@@ -28,7 +28,7 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
 
         this.repository.save(user);
 
-        assertTrue(this.repository.search(user.id()).isPresent());
+        assertEquals(user, this.repository.search(user.id()).orElseThrow());
     }
 
     @Test
