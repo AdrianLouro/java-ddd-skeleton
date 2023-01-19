@@ -20,19 +20,19 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
     }
 
     @Test
-    void should_not_create_a_user_with_an_invalid_uuid() {
+    void should_raise_an_exception_if_the_id_is_invalid() {
         assertThrows(InvalidUuidException.class, () -> new UserId("123456789"));
     }
 
     @Test
-    void should_not_create_a_user_with_an_invalid_name() {
+    void should_raise_an_exception_if_the_name_is_invalid() {
         assertThrows(UserNameTooShortException.class, () -> new UserName("0"));
 
         assertThrows(UserNameTooLongException.class, () -> new UserName("012345678901234567890123456789012"));
     }
 
     @Test
-    void should_not_create_a_user_with_invalid_birth_date_format() {
+    void should_raise_an_exception_if_the_birth_date_is_invalid() {
         this.givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         assertThrows(InvalidDateException.class, () -> new UserBirthDate("01-01-2000", this.clock()));
@@ -40,7 +40,7 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
 
     @Test
-    void should_not_create_an_underage_user() {
+    void should_raise_an_exception_if_the_user_is_underage() {
         this.givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         assertThrows(UserCannotBeUnderageException.class, () -> new UserBirthDate("2022-01-01", this.clock()));
