@@ -20,22 +20,37 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
     }
 
     @Test
-    void should_raise_an_exception_if_the_id_is_invalid() {
-        assertThrows(InvalidUuidException.class, () -> new UserId("123456789"));
+    void should_raise_an_exception_if_the_id_is_bad_formatted() {
+        assertThrows(
+                InvalidUuidException.class,
+                () -> new UserId("123456789")
+        );
     }
 
     @Test
-    void should_raise_an_exception_if_the_name_is_invalid() {
-        assertThrows(UserNameTooShortException.class, () -> new UserName("0"));
-
-        assertThrows(UserNameTooLongException.class, () -> new UserName("012345678901234567890123456789012"));
+    void should_raise_an_exception_if_the_name_is_too_short() {
+        assertThrows(
+                UserNameTooShortException.class,
+                () -> new UserName("0")
+        );
     }
 
     @Test
-    void should_raise_an_exception_if_the_birth_date_is_invalid() {
+    void should_raise_an_exception_if_the_name_is_too_long() {
+        assertThrows(
+                UserNameTooLongException.class,
+                () -> new UserName("012345678901234567890123456789012")
+        );
+    }
+
+    @Test
+    void should_raise_an_exception_if_the_birth_date_is_bad_formatted() {
         this.givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
-        assertThrows(InvalidDateException.class, () -> new UserBirthDate("01-01-2000", this.clock()));
+        assertThrows(
+                InvalidDateException.class,
+                () -> new UserBirthDate("01-01-2000", this.clock())
+        );
     }
 
 
@@ -43,7 +58,10 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
     void should_raise_an_exception_if_the_user_is_underage() {
         this.givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
-        assertThrows(UserCannotBeUnderageException.class, () -> new UserBirthDate("2022-01-01", this.clock()));
+        assertThrows(
+                UserCannotBeUnderageException.class,
+                () -> new UserBirthDate("2022-01-01", this.clock())
+        );
     }
 
     @Test

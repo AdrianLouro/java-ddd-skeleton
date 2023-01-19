@@ -23,7 +23,7 @@ final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
     }
 
     @Test
-    void should_raise_an_exception_if_user_does_not_exist() {
+    void should_raise_an_exception_if_the_user_does_not_exist() {
         final var user = UserObjectMother.random(this.clock);
 
         final Executable executeCommand = () -> this.cliCommand.execute(
