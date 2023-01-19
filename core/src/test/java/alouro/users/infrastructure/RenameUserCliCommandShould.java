@@ -1,7 +1,7 @@
 package alouro.users.infrastructure;
 
 import alouro.users.UsersModuleInfrastructureTestCase;
-import alouro.users.domain.UserName;
+import alouro.users.domain.UserBuilder;
 import alouro.users.domain.UserObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +25,7 @@ final class RenameUserCliCommandShould extends UsersModuleInfrastructureTestCase
         final var user = UserObjectMother.random(this.clock);
         final var newName = "new name";
 
-        final var updatedUser = UserObjectMother.create(
-                user.id().value(),
-                new UserName(newName).value(),
-                user.birthDate().value(),
-                this.clock
-        );
+        final var updatedUser = UserBuilder.fromUser(user, this.clock).withName(newName).build();
 
         this.persist(user);
 

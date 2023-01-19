@@ -21,7 +21,7 @@ public final class UserRenamer {
 
     public void rename(final String id, final String name) {
         final var user = this.userFinder.find(new UserId(id));
-        user.updateName(new UserName(name)); // TODO: should the ValueObject be instantiated by the User ???
+        user.renameWith(new UserName(name)); // TODO: should the ValueObject be instantiated by the User ???
 
         this.userRepository.save(user);
 

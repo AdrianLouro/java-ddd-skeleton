@@ -47,18 +47,13 @@ final class UserRenamerShould extends UsersModuleUnitTestCase {
 
         final var user = UserObjectMother.random(this.clock());
 
-        final var renamedUser = UserObjectMother.create(
-                user.id().value(),
-                UserNameObjectMother.create("Another name").value(),
-                user.birthDate().value(),
-                this.clock()
-        );
+        final var renamedUser = UserBuilder.fromUser(user, this.clock()).withName("Another name").build();
 
         this.shouldFind(user.id(), user);
 
         this.renamer.rename(user.id().value(), renamedUser.name().value());
 
         this.shouldSave(renamedUser);
-        this.shouldPublish(UserRenamedDomainEventObjectMother.create(user.id(), renamedUser.name()));
+        this.shouldPublish(UserRenamedDomainEventObjectMother.from(user));
     }
 }

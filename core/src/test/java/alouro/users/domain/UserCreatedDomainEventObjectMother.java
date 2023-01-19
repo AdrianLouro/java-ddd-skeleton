@@ -14,4 +14,8 @@ public final class UserCreatedDomainEventObjectMother {
                 UserBirthDateObjectMother.random(clock)
         );
     }
+
+    public static UserCreatedDomainEvent from(final User user) {
+        return create(user.id(), user.name(), user.birthDate());
+    }
 }

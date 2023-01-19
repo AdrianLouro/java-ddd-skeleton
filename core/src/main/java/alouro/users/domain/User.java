@@ -27,7 +27,7 @@ public final class User extends AggregateRoot {
     }
 
     public static User create(final String id, final String name, final String birthDate, final Clock clock) {
-        var user = fromPrimitives(id, name, birthDate, clock);
+        final var user = fromPrimitives(id, name, birthDate, clock);
 
         user.push(
                 new UserCreatedDomainEvent(
@@ -65,7 +65,7 @@ public final class User extends AggregateRoot {
         return birthDate;
     }
 
-    public void updateName(final UserName name) {
+    public void renameWith(final UserName name) {
         if (this.name.value().equals(name.value())) {
             return;
         }

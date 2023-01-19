@@ -11,4 +11,8 @@ public final class UserRenamedDomainEventObjectMother {
                 UserNameObjectMother.random()
         );
     }
+
+    public static UserRenamedDomainEvent from(final User user) {
+        return create(user.id(), user.name());
+    }
 }
