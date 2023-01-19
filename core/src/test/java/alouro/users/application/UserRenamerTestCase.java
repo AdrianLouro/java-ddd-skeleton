@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class UserRenamerShould extends UsersModuleUnitTestCase {
+final class UserRenamerTestCase extends UsersModuleUnitTestCase {
 
     private UserRenamer renamer;
 
@@ -19,7 +19,7 @@ final class UserRenamerShould extends UsersModuleUnitTestCase {
     }
 
     @Test
-    void not_update_a_non_existing_user() {
+    void should_not_update_a_non_existing_user() {
         final var userId = UserIdObjectMother.random();
 
         this.shouldNotFindUser(userId);
@@ -31,7 +31,7 @@ final class UserRenamerShould extends UsersModuleUnitTestCase {
     }
 
     @Test
-    void not_publish_user_renamed_event_if_name_did_not_change() {
+    void should_not_publish_user_renamed_event_if_name_did_not_change() {
         this.shouldNowBe(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         final var user = UserObjectMother.random(this.clock());
@@ -44,7 +44,7 @@ final class UserRenamerShould extends UsersModuleUnitTestCase {
     }
 
     @Test
-    void rename_a_user() {
+    void should_rename_a_user() {
         this.shouldNowBe(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         final var user = UserObjectMother.random(this.clock());

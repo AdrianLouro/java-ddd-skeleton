@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-final class RenameUserCliCommandShould extends UsersModuleInfrastructureTestCase {
+final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCase {
 
     private RenameUserCliCommand cliCommand;
 
@@ -21,7 +21,7 @@ final class RenameUserCliCommandShould extends UsersModuleInfrastructureTestCase
     }
 
     @Test
-    void rename_a_user() {
+    void should_rename_a_user() {
         final var user = UserObjectMother.random(this.clock);
         final var newName = "new name";
 

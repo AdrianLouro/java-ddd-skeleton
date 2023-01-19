@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-final class InMemoryUserRepositoryShould extends UsersModuleInfrastructureTestCase {
+final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTestCase {
 
     private InMemoryUserRepository repository;
 
@@ -18,12 +18,12 @@ final class InMemoryUserRepositoryShould extends UsersModuleInfrastructureTestCa
     }
 
     @Test
-    void not_find_a_non_existing_user() {
+    void should_not_find_a_non_existing_user() {
         assertTrue(this.repository.search(UserIdObjectMother.random()).isEmpty());
     }
 
     @Test
-    void save_a_new_user() {
+    void should_save_a_new_user() {
         final var user = UserObjectMother.random(this.clock);
 
         this.repository.save(user);
@@ -32,7 +32,7 @@ final class InMemoryUserRepositoryShould extends UsersModuleInfrastructureTestCa
     }
 
     @Test
-    void find_an_existing_user() {
+    void should_find_an_existing_user() {
         final var user = UserObjectMother.random(this.clock);
 
         this.repository.save(user);
