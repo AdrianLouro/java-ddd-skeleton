@@ -7,7 +7,7 @@ public final class UserNameObjectMother {
     }
 
     public static UserName random() {
-//        return StringObjectMother.random(); // TODO: randomize
+//        return StringObjectMother.random(); // TODO: randomize with lengths between 2 and 32
         return new UserName("John");
     }
 }

@@ -51,14 +51,8 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
     void should_create_a_user() {
         this.shouldNowBe(LocalDateTime.parse("2022-09-12T00:00:00"));
 
-        final var user = UserObjectMother.create(
-                UserIdObjectMother.random().value(),
-                UserNameObjectMother.random().value(),
-                "2000-01-01",
-                this.clock()
-        );
-
-        final var event = UserCreatedDomainEventObjectMother.create(user.id(), user.name(), user.birthDate());
+        final var user = UserObjectMother.random(this.clock());
+        final var event = UserCreatedDomainEventObjectMother.from(user);
 
         this.creator.create(user.id().value(), user.name().value(), user.birthDate().value());
 
