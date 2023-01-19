@@ -18,7 +18,7 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
     }
 
     @Test
-    void should_not_update_a_non_existing_user() {
+    void should_not_update_a_non_existent_user() {
         final var userId = UserIdObjectMother.random();
 
         this.givenANonExistentUser(userId);

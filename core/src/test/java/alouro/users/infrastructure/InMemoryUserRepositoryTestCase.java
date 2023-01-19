@@ -17,7 +17,7 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
     }
 
     @Test
-    void should_not_find_a_non_existing_user() {
+    void should_not_find_a_non_existent_user() {
         assertTrue(this.repository.search(UserIdObjectMother.random()).isEmpty());
     }
 
