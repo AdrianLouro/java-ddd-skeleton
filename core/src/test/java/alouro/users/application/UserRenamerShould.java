@@ -20,11 +20,13 @@ final class UserRenamerShould extends UsersModuleUnitTestCase {
 
     @Test
     void not_update_a_non_existing_user() {
-        this.shouldNotFindUser();
+        final var userId = UserIdObjectMother.random();
+
+        this.shouldNotFindUser(userId);
 
         assertThrows(
                 UserNotFoundException.class,
-                () -> this.renamer.rename(UserIdObjectMother.random().value(), UserNameObjectMother.random().value())
+                () -> this.renamer.rename(userId.value(), UserNameObjectMother.random().value())
         );
     }
 
@@ -34,7 +36,7 @@ final class UserRenamerShould extends UsersModuleUnitTestCase {
 
         final var user = UserObjectMother.random(this.clock());
 
-        this.shouldFind(user.id(), user);
+        this.shouldFindUser(user.id(), user);
 
         this.renamer.rename(user.id().value(), user.name().value());
 
@@ -47,9 +49,12 @@ final class UserRenamerShould extends UsersModuleUnitTestCase {
 
         final var user = UserObjectMother.random(this.clock());
 
-        final var renamedUser = UserBuilder.fromUser(user, this.clock()).withName("Another name").build();
+        final var renamedUser = UserBuilder
+                .fromUser(user, this.clock())
+                .withName("Another name")
+                .build();
 
-        this.shouldFind(user.id(), user);
+        this.shouldFindUser(user.id(), user);
 
         this.renamer.rename(user.id().value(), renamedUser.name().value());
 

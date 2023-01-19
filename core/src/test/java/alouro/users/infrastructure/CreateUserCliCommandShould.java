@@ -31,6 +31,6 @@ final class CreateUserCliCommandShould extends UsersModuleInfrastructureTestCase
                 )
         );
 
-        assertEquals(user, this.find(user));
+        assertEquals(user, this.search(user).orElseThrow());
     }
 }

@@ -9,16 +9,8 @@ public final class UserFinder {
     }
 
     public User find(final UserId id) {
-        final User user = this.userRepository.find(id);
-
-        ensureUserExists(user);
-
-        return user;
-    }
-
-    private static void ensureUserExists(final User user) {
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
+        return this.userRepository
+                .search(id)
+                .orElseThrow(UserNotFoundException::new);
     }
 }

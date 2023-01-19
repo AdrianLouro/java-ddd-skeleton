@@ -10,6 +10,7 @@ import alouro.users.domain.User;
 import alouro.users.infrastructure.InMemoryUserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class UsersModuleInfrastructureTestCase {
     protected Clock clock = new SystemClock();
@@ -30,7 +31,7 @@ public abstract class UsersModuleInfrastructureTestCase {
         this.userRepository.save(user);
     }
 
-    protected User find(final User user) {
-        return this.userRepository.find(user.id());
+    protected Optional<User> search(final User user) {
+        return this.userRepository.search(user.id());
     }
 }

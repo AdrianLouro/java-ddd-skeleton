@@ -19,7 +19,7 @@ final class InMemoryUserRepositoryShould extends UsersModuleInfrastructureTestCa
 
     @Test
     void not_find_a_non_existing_user() {
-        assertNull(this.repository.find(UserIdObjectMother.random()));
+        assertTrue(this.repository.search(UserIdObjectMother.random()).isEmpty());
     }
 
     @Test
@@ -28,7 +28,7 @@ final class InMemoryUserRepositoryShould extends UsersModuleInfrastructureTestCa
 
         this.repository.save(user);
 
-        assertNotNull(this.repository.find(user.id()));
+        assertTrue(this.repository.search(user.id()).isPresent());
     }
 
     @Test
@@ -37,6 +37,6 @@ final class InMemoryUserRepositoryShould extends UsersModuleInfrastructureTestCa
 
         this.repository.save(user);
 
-        assertEquals(user, this.repository.find(user.id()));
+        assertEquals(user, this.repository.search(user.id()).orElseThrow());
     }
 }

@@ -7,6 +7,7 @@ import alouro.users.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -52,12 +53,12 @@ public abstract class UsersModuleUnitTestCase {
         verify(this.domainEventPublisher(), times(1)).publish(List.of());
     }
 
-    protected final void shouldFind(final UserId id, final User user) {
-        when(this.userRepository().find(id)).thenReturn(user);
+    protected final void shouldFindUser(final UserId id, final User user) {
+        when(this.userRepository().search(id)).thenReturn(Optional.of(user));
     }
 
-    protected final void shouldNotFindUser() {
-        this.shouldFind(UserIdObjectMother.random(), null);
+    protected final void shouldNotFindUser(final UserId id) {
+        when(this.userRepository().search(id)).thenReturn(Optional.empty());
     }
 
     protected final void shouldSave(final User user) {

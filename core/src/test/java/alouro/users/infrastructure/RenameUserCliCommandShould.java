@@ -25,7 +25,10 @@ final class RenameUserCliCommandShould extends UsersModuleInfrastructureTestCase
         final var user = UserObjectMother.random(this.clock);
         final var newName = "new name";
 
-        final var updatedUser = UserBuilder.fromUser(user, this.clock).withName(newName).build();
+        final var updatedUser = UserBuilder
+                .fromUser(user, this.clock)
+                .withName(newName)
+                .build();
 
         this.persist(user);
 
@@ -36,6 +39,6 @@ final class RenameUserCliCommandShould extends UsersModuleInfrastructureTestCase
                 )
         );
 
-        assertEquals(updatedUser, this.find(user));
+        assertEquals(updatedUser, this.search(user).orElseThrow());
     }
 }

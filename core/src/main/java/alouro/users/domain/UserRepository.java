@@ -1,7 +1,9 @@
 package alouro.users.domain;
 
+import java.util.Optional;
+
 public interface UserRepository {
-    User find(final UserId id);
+    Optional<User> search(final UserId id);
 
     void save(final User user);
 }
