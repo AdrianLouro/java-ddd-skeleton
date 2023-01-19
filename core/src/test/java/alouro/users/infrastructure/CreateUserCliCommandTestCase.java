@@ -1,6 +1,5 @@
 package alouro.users.infrastructure;
 
-import alouro.users.UsersModuleInfrastructureTestCase;
 import alouro.users.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

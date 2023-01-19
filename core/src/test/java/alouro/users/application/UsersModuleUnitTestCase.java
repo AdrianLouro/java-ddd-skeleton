@@ -1,4 +1,4 @@
-package alouro.users;
+package alouro.users.application;
 
 import alouro.domain.Clock;
 import alouro.domain.DomainEvent;

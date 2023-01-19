@@ -2,7 +2,6 @@ package alouro.users.application;
 
 import alouro.domain.value_object.InvalidDateException;
 import alouro.domain.value_object.InvalidUuidException;
-import alouro.users.UsersModuleUnitTestCase;
 import alouro.users.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

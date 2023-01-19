@@ -1,4 +1,4 @@
-package alouro.users;
+package alouro.users.infrastructure;
 
 import alouro.domain.Clock;
 import alouro.domain.DomainEvent;
@@ -7,7 +7,6 @@ import alouro.infrastructure.SystemClock;
 import alouro.users.application.UserCreator;
 import alouro.users.application.UserRenamer;
 import alouro.users.domain.User;
-import alouro.users.infrastructure.InMemoryUserRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 
