@@ -1,6 +1,6 @@
 package alouro.users.domain;
 
-import alouro.domain.value_object.StringObjectMother;
+import alouro.domain.value_object.NameObjectMother;
 
 public final class UserNameObjectMother {
 
@@ -9,6 +9,6 @@ public final class UserNameObjectMother {
     }
 
     public static UserName random() {
-        return create(StringObjectMother.random()); // TODO: randomize with lengths between 2 and 32
+        return create(NameObjectMother.randomFullName(32));
     }
 }
