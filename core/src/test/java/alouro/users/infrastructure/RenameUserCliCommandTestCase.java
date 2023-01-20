@@ -1,5 +1,6 @@
 package alouro.users.infrastructure;
 
+import alouro.users.UsersModuleInfrastructureTestCase;
 import alouro.users.domain.UserBuilder;
 import alouro.users.domain.UserNotFoundException;
 import alouro.users.domain.UserObjectMother;

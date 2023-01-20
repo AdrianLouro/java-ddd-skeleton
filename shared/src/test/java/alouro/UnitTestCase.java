@@ -1,16 +1,14 @@
-package alouro.users.application;
+package alouro;
 
 import alouro.domain.ClockMock;
 import alouro.domain.DomainEventPublisherMock;
-import alouro.users.domain.UserRepositoryMock;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 
 @TestMethodOrder(MethodOrderer.Random.class)
-public abstract class UsersModuleUnitTestCase {
+public abstract class UnitTestCase {
     private ClockMock clock;
     private DomainEventPublisherMock domainEventPublisher;
-    private UserRepositoryMock userRepository;
 
     protected final ClockMock clock() {
         if (this.clock == null) {
@@ -26,13 +24,5 @@ public abstract class UsersModuleUnitTestCase {
         }
 
         return this.domainEventPublisher;
-    }
-
-    protected final UserRepositoryMock userRepository() {
-        if (this.userRepository == null) {
-            this.userRepository = new UserRepositoryMock();
-        }
-
-        return this.userRepository;
     }
 }

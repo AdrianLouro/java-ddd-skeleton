@@ -23,7 +23,7 @@ public abstract class ValueObject<T> {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return super.hashCode();
     }
 }
