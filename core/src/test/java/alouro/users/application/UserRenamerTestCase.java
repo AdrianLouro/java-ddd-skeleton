@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static alouro.ThrownMatcher.thrown;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 final class UserRenamerTestCase extends UsersModuleUnitTestCase {
 
@@ -27,10 +28,9 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
 
         this.userRepository().givenANonExistentUser(userId);
 
-        assertThrows(
-                UserNotFoundException.class,
-                () -> this.renamer.rename(userId.value(), UserNameObjectMother.random().value())
-        );
+        final Runnable renameUser = () -> this.renamer.rename(userId.value(), UserNameObjectMother.random().value());
+
+        assertThat(renameUser, thrown(UserNotFoundException.class));
     }
 
     @Test

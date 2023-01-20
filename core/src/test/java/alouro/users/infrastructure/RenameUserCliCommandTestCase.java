@@ -6,15 +6,14 @@ import alouro.users.domain.UserNotFoundException;
 import alouro.users.domain.UserObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map;
 
+import static alouro.ThrownMatcher.thrown;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCase {
 
@@ -29,14 +28,14 @@ final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
     void should_raise_an_exception_if_the_user_does_not_exist() {
         final var user = UserObjectMother.random(this.clock);
 
-        final Executable executeCommand = () -> this.cliCommand.execute(
+        final Runnable executeCommand = () -> this.cliCommand.execute(
                 Map.ofEntries(
                         new SimpleImmutableEntry<>("id", user.id().value()),
                         new SimpleImmutableEntry<>("name", user.name().value())
                 )
         );
 
-        assertThrows(UserNotFoundException.class, executeCommand);
+        assertThat(executeCommand, thrown(UserNotFoundException.class));
     }
 
     @Test

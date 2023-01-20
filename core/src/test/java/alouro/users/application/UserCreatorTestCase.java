@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static alouro.ThrownMatcher.thrown;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
@@ -26,36 +27,32 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
     @Test
     void should_raise_an_exception_if_the_id_is_bad_formatted() {
-        assertThrows(
-                InvalidUuidException.class,
-                () -> new UserId("123456789")
-        );
+        final Runnable instantiateUserId = () -> new UserId("123456789");
+
+        assertThat(instantiateUserId, thrown(InvalidUuidException.class));
     }
 
     @Test
     void should_raise_an_exception_if_the_name_is_too_short() {
-        assertThrows(
-                UserNameTooShortException.class,
-                () -> new UserName("0")
-        );
+        final Runnable instantiateUserName = () -> new UserName("0");
+
+        assertThat(instantiateUserName, thrown(UserNameTooShortException.class));
     }
 
     @Test
     void should_raise_an_exception_if_the_name_is_too_long() {
-        assertThrows(
-                UserNameTooLongException.class,
-                () -> new UserName("012345678901234567890123456789012")
-        );
+        final Runnable instantiateUserName = () -> new UserName("012345678901234567890123456789012");
+
+        assertThat(instantiateUserName, thrown(UserNameTooLongException.class));
     }
 
     @Test
     void should_raise_an_exception_if_the_birth_date_is_bad_formatted() {
         this.clock().givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
-        assertThrows(
-                InvalidDateException.class,
-                () -> new UserBirthDate("01-01-2000", this.clock().mock())
-        );
+        final Runnable instantiateUserBirthDate = () -> new UserBirthDate("01-01-2000", this.clock().mock());
+
+        assertThat(instantiateUserBirthDate, thrown(InvalidDateException.class));
     }
 
 
@@ -63,10 +60,9 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
     void should_raise_an_exception_if_the_user_is_underage() {
         this.clock().givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
-        assertThrows(
-                UserCannotBeUnderageException.class,
-                () -> new UserBirthDate("2022-01-01", this.clock().mock())
-        );
+        final Runnable instantiateUserBirthDate = () -> new UserBirthDate("2022-01-01", this.clock().mock());
+
+        assertThat(instantiateUserBirthDate, thrown(UserCannotBeUnderageException.class));
     }
 
     @Test
