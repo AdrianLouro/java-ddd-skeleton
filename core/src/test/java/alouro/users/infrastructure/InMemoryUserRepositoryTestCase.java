@@ -6,7 +6,9 @@ import alouro.users.domain.UserObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTestCase {
 
@@ -19,7 +21,10 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
 
     @Test
     void should_not_find_a_non_existent_user() {
-        assertTrue(this.repository.search(UserIdObjectMother.random()).isEmpty());
+        assertThat(
+                this.repository.search(UserIdObjectMother.random()).isEmpty(),
+                is(true)
+        );
     }
 
     @Test
@@ -28,7 +33,10 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
 
         this.repository.save(user);
 
-        assertEquals(user, this.repository.search(user.id()).orElseThrow());
+        assertThat(
+                this.repository.search(user.id()).orElseThrow(),
+                is(equalTo(user))
+        );
     }
 
     @Test
@@ -37,6 +45,9 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
 
         this.repository.save(user);
 
-        assertEquals(user, this.repository.search(user.id()).orElseThrow());
+        assertThat(
+                this.repository.search(user.id()).orElseThrow(),
+                is(equalTo(user))
+        );
     }
 }

@@ -11,7 +11,9 @@ import org.junit.jupiter.api.function.Executable;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCase {
@@ -56,6 +58,9 @@ final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
                 )
         );
 
-        assertEquals(updatedUser, this.search(user).orElseThrow());
+        assertThat(
+                this.search(user).orElseThrow(),
+                is(equalTo(updatedUser))
+        );
     }
 }
