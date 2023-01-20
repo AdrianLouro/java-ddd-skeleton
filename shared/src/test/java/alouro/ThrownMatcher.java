@@ -4,20 +4,17 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import java.util.Optional;
-
 public final class ThrownMatcher extends TypeSafeMatcher<Runnable> {
 
-    private final Class expectedThrowableClass;
-    private Optional<Class> thrownThrowableClass;
+    private final Class<? extends Throwable> expectedThrowableClass;
+    private Class<? extends Throwable> thrownThrowableClass;
 
 
-    public ThrownMatcher(final Class expectedThrowableClass) {
+    public ThrownMatcher(final Class<? extends Throwable> expectedThrowableClass) {
         this.expectedThrowableClass = expectedThrowableClass;
-        this.thrownThrowableClass = Optional.empty();
     }
 
-    public static Matcher thrown(final Class<? extends Throwable> expectedThrowableClass) {
+    public static Matcher<Runnable> thrown(final Class<? extends Throwable> expectedThrowableClass) {
         return new ThrownMatcher(expectedThrowableClass);
     }
 
@@ -28,16 +25,16 @@ public final class ThrownMatcher extends TypeSafeMatcher<Runnable> {
 
             return false;
         } catch (Throwable throwable) {
-            this.thrownThrowableClass = Optional.of(throwable.getClass());
+            this.thrownThrowableClass = throwable.getClass();
 
-            return this.thrownThrowableClass.orElseThrow().equals(expectedThrowableClass);
+            return this.thrownThrowableClass.equals(expectedThrowableClass);
         }
     }
 
     @Override
     public void describeTo(final Description description) {
-        final var thrownMessage = this.thrownThrowableClass.isPresent()
-                ? this.thrownThrowableClass.get().getCanonicalName()
+        final var thrownMessage = this.thrownThrowableClass != null
+                ? this.thrownThrowableClass.getCanonicalName()
                 : "nothing";
 
         description.appendText(

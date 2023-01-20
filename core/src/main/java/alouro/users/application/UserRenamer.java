@@ -11,7 +11,6 @@ public final class UserRenamer {
     public UserRenamer(final UserRepository userRepository, final DomainEventPublisher domainEventPublisher) {
         /**
          * We can decide whether to inject or instantiate it
-         *
          * If we instantiate like this, we assure that we test it correctly
          */
         this.userFinder = new UserFinder(userRepository);
