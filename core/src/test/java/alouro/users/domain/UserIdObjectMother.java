@@ -1,6 +1,6 @@
 package alouro.users.domain;
 
-import java.util.UUID;
+import alouro.domain.value_object.UuidObjectMother;
 
 public final class UserIdObjectMother {
 
@@ -9,7 +9,6 @@ public final class UserIdObjectMother {
     }
 
     public static UserId random() {
-//        return UuidObjectMother.random(); // TODO: randomize
-        return new UserId(UUID.randomUUID().toString());
+        return create(UuidObjectMother.random());
     }
 }

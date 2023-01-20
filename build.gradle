@@ -1,19 +1,51 @@
-plugins {
-    id 'java'
+allprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 19
+    targetCompatibility = 19
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.+'
+        testImplementation 'org.mockito:mockito-core:4.+'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.+'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
 }
 
-group 'alouro'
-version '1.0-SNAPSHOT'
+subprojects {
+    group = "alouro.${rootProject.name}"
 
-repositories {
-    mavenCentral()
+    sourceSets {
+        main {
+            java { srcDirs = ['src/main/java'] }
+            resources { srcDirs = ['src/main/resources'] }
+        }
+
+        test {
+            java { srcDirs = ['src/test/java'] }
+            resources { srcDirs = ['src/test/resources'] }
+        }
+    }
+
+    dependencies {
+        testImplementation rootProject.sourceSets.main.output
+
+        if (project.name != "shared") {
+            implementation project(":shared")
+            testImplementation project(":shared").sourceSets.test.output
+        }
+    }
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.+'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.+'
-}
-
-test {
-    useJUnitPlatform()
+    implementation project(":shared")
+    implementation project(":core")
+    testImplementation project(":shared").sourceSets.test.output
 }

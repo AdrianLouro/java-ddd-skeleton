@@ -1,5 +1,7 @@
 package alouro.users.domain;
 
+import alouro.domain.value_object.StringObjectMother;
+
 public final class UserNameObjectMother {
 
     public static UserName create(final String value) {
@@ -7,7 +9,6 @@ public final class UserNameObjectMother {
     }
 
     public static UserName random() {
-//        return StringObjectMother.random(); // TODO: randomize with lengths between 2 and 32
-        return new UserName("John");
+        return create(StringObjectMother.random()); // TODO: randomize with lengths between 2 and 32
     }
 }
