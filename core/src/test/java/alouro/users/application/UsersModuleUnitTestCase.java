@@ -1,69 +1,38 @@
 package alouro.users.application;
 
-import alouro.domain.Clock;
-import alouro.domain.DomainEvent;
-import alouro.domain.DomainEventPublisher;
-import alouro.users.domain.*;
+import alouro.domain.ClockMock;
+import alouro.domain.DomainEventPublisherMock;
+import alouro.users.domain.UserRepositoryMock;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.Mockito.*;
-
 @TestMethodOrder(MethodOrderer.Random.class)
 public abstract class UsersModuleUnitTestCase {
-    private Clock clock;
-    private DomainEventPublisher domainEventPublisher;
-    private UserRepository userRepository;
+    private ClockMock clock;
+    private DomainEventPublisherMock domainEventPublisher;
+    private UserRepositoryMock userRepository;
 
-    protected final Clock clock() {
+    protected final ClockMock clock() {
         if (this.clock == null) {
-            this.clock = mock(Clock.class);
+            this.clock = new ClockMock();
         }
 
         return this.clock;
     }
 
-    protected final DomainEventPublisher domainEventPublisher() {
+    protected final DomainEventPublisherMock domainEventPublisher() {
         if (this.domainEventPublisher == null) {
-            this.domainEventPublisher = mock(DomainEventPublisher.class);
+            this.domainEventPublisher = new DomainEventPublisherMock();
         }
 
         return this.domainEventPublisher;
     }
 
-    protected final UserRepository userRepository() {
+    protected final UserRepositoryMock userRepository() {
         if (this.userRepository == null) {
-            this.userRepository = mock(UserRepository.class);
+            this.userRepository = new UserRepositoryMock();
         }
 
         return this.userRepository;
-    }
-
-    protected final void givenACurrentDate(final LocalDateTime localDateTime) {
-        when(this.clock().now()).thenReturn(localDateTime);
-    }
-
-    protected final void givenAUser(final UserId id, final User user) {
-        when(this.userRepository().search(id)).thenReturn(Optional.of(user));
-    }
-
-    protected final void givenANonExistentUser(final UserId id) {
-        when(this.userRepository().search(id)).thenReturn(Optional.empty());
-    }
-
-    protected void shouldPublish(final DomainEvent domainEvent) {
-        verify(this.domainEventPublisher(), times(1)).publish(List.of(domainEvent));
-    }
-
-    protected void shouldNotPublishAnyDomainEvent() {
-        verify(this.domainEventPublisher(), times(1)).publish(List.of());
-    }
-
-    protected final void shouldSave(final User user) {
-        verify(this.userRepository(), times(1)).save(user);
     }
 }

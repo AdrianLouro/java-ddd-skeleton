@@ -16,7 +16,11 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
     @BeforeEach
     void setUp() {
-        this.creator = new UserCreator(this.userRepository(), this.domainEventPublisher(), this.clock());
+        this.creator = new UserCreator(
+                this.userRepository().mock(),
+                this.domainEventPublisher().mock(),
+                this.clock().mock()
+        );
     }
 
     @Test
@@ -45,35 +49,35 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
 
     @Test
     void should_raise_an_exception_if_the_birth_date_is_bad_formatted() {
-        this.givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
+        this.clock().givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         assertThrows(
                 InvalidDateException.class,
-                () -> new UserBirthDate("01-01-2000", this.clock())
+                () -> new UserBirthDate("01-01-2000", this.clock().mock())
         );
     }
 
 
     @Test
     void should_raise_an_exception_if_the_user_is_underage() {
-        this.givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
+        this.clock().givenACurrentDate(LocalDateTime.parse("2022-01-01T00:00:00"));
 
         assertThrows(
                 UserCannotBeUnderageException.class,
-                () -> new UserBirthDate("2022-01-01", this.clock())
+                () -> new UserBirthDate("2022-01-01", this.clock().mock())
         );
     }
 
     @Test
     void should_create_a_user() {
-        this.givenACurrentDate(LocalDateTime.parse("2022-09-12T00:00:00"));
+        this.clock().givenACurrentDate(LocalDateTime.parse("2022-09-12T00:00:00"));
 
-        final var user = UserObjectMother.random(this.clock());
+        final var user = UserObjectMother.random(this.clock().mock());
         final var event = UserCreatedDomainEventObjectMother.from(user);
 
         this.creator.create(user.id().value(), user.name().value(), user.birthDate().value());
 
-        this.shouldSave(user);
-        this.shouldPublish(event);
+        this.userRepository().shouldHaveSaved(user);
+        this.domainEventPublisher().shouldHavePublished(event);
     }
 }
