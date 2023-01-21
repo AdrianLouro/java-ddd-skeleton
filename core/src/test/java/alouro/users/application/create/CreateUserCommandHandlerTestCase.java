@@ -12,16 +12,18 @@ import java.time.LocalDateTime;
 import static alouro.ThrownMatcher.thrown;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-final class UserCreatorTestCase extends UsersModuleUnitTestCase {
+final class CreateUserCommandHandlerTestCase extends UsersModuleUnitTestCase {
 
-    private UserCreator creator;
+    private CreateUserCommandHandler commandHandler;
 
     @BeforeEach
     void setUp() {
-        this.creator = new UserCreator(
-                this.userRepository().mock(),
-                this.eventBus().mock(),
-                this.clock().mock()
+        this.commandHandler = new CreateUserCommandHandler(
+                new UserCreator(
+                        this.userRepository().mock(),
+                        this.eventBus().mock(),
+                        this.clock().mock()
+                )
         );
     }
 
@@ -72,7 +74,7 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
         final var user = UserObjectMother.random(this.clock().mock());
         final var event = UserCreatedDomainEventObjectMother.from(user);
 
-        this.creator.create(user.id().value(), user.name().value(), user.birthDate().value());
+        this.commandHandler.handle(CreateUserCommandObjectMother.from(user));
 
         this.userRepository().shouldHaveSaved(user);
         this.eventBus().shouldHavePublished(event);

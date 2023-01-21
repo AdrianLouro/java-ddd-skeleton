@@ -21,7 +21,7 @@ final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
 
     @BeforeEach
     void setUp() {
-        this.cliCommand = new RenameUserCliCommand(this.userRenamer);
+        this.cliCommand = new RenameUserCliCommand(this.commandBus);
     }
 
     @Test

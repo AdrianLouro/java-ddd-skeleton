@@ -10,25 +10,28 @@ import java.time.LocalDateTime;
 import static alouro.ThrownMatcher.thrown;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-final class UserRenamerTestCase extends UsersModuleUnitTestCase {
+final class RenameUserCommandHandlerTestCase extends UsersModuleUnitTestCase {
 
-    private UserRenamer renamer;
+    private RenameUserCommandHandler commandHandler;
 
     @BeforeEach
     void setUp() {
-        this.renamer = new UserRenamer(
-                this.userRepository().mock(),
-                this.eventBus().mock()
+        this.commandHandler = new RenameUserCommandHandler(
+
+                new UserRenamer(
+                        this.userRepository().mock(),
+                        this.eventBus().mock()
+                )
         );
     }
 
     @Test
     void should_raise_an_exception_if_the_user_does_not_exist() {
-        final var userId = UserIdObjectMother.random();
+        final var command = RenameUserCommandObjectMother.random();
 
-        this.userRepository().givenANonExistentUser(userId);
+        this.userRepository().givenANonExistentUser(UserIdObjectMother.create(command.id()));
 
-        final Runnable renameUser = () -> this.renamer.rename(userId.value(), UserNameObjectMother.random().value());
+        final Runnable renameUser = () -> this.commandHandler.handle(command);
 
         assertThat(renameUser, thrown(UserNotFoundException.class));
     }
@@ -41,7 +44,7 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
 
         this.userRepository().givenAUser(user.id(), user);
 
-        this.renamer.rename(user.id().value(), user.name().value());
+        this.commandHandler.handle(RenameUserCommandObjectMother.from(user));
 
         this.eventBus().shouldHaveNotPublishedAnyDomainEvent();
     }
@@ -59,7 +62,7 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
                 .withName("Another name")
                 .build();
 
-        this.renamer.rename(user.id().value(), renamedUser.name().value());
+        this.commandHandler.handle(RenameUserCommandObjectMother.from(renamedUser));
 
         this.userRepository().shouldHaveSaved(renamedUser);
         this.eventBus().shouldHavePublished(UserRenamedDomainEventObjectMother.from(user));

@@ -18,7 +18,7 @@ final class CreateUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
 
     @BeforeEach
     void setUp() {
-        this.cliCommand = new CreateUserCliCommand(this.userCreator);
+        this.cliCommand = new CreateUserCliCommand(this.commandBus);
     }
 
     @Test

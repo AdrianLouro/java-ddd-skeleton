@@ -3,19 +3,19 @@ package alouro.users.domain;
 import alouro.domain.Clock;
 
 public final class UserCreatedDomainEventObjectMother {
-    public static UserCreatedDomainEvent create(final UserId id, final UserName name, final UserBirthDate birthDate) {
-        return new UserCreatedDomainEvent(id.value(), name.value(), birthDate.value());
+    public static UserCreatedDomainEvent create(final String id, final String name, final String birthDate) {
+        return new UserCreatedDomainEvent(id, name, birthDate);
     }
 
     public static UserCreatedDomainEvent random(final Clock clock) {
         return create(
-                UserIdObjectMother.random(),
-                UserNameObjectMother.random(),
-                UserBirthDateObjectMother.random(clock)
+                UserIdObjectMother.random().value(),
+                UserNameObjectMother.random().value(),
+                UserBirthDateObjectMother.random(clock).value()
         );
     }
 
     public static UserCreatedDomainEvent from(final User user) {
-        return create(user.id(), user.name(), user.birthDate());
+        return create(user.id().value(), user.name().value(), user.birthDate().value());
     }
 }
