@@ -1,21 +1,21 @@
-package alouro.users.application;
+package alouro.users.application.rename;
 
-import alouro.domain.*;
+import alouro.domain.event.EventBus;
 import alouro.users.domain.*;
 
 public final class UserRenamer {
     private final UserFinder userFinder;
     private final UserRepository userRepository;
-    private final DomainEventPublisher domainEventPublisher;
+    private final EventBus eventBus;
 
-    public UserRenamer(final UserRepository userRepository, final DomainEventPublisher domainEventPublisher) {
+    public UserRenamer(final UserRepository userRepository, final EventBus eventBus) {
         /**
          * We can decide whether to inject or instantiate it
          * If we instantiate like this, we assure that we test it correctly
          */
         this.userFinder = new UserFinder(userRepository);
         this.userRepository = userRepository;
-        this.domainEventPublisher = domainEventPublisher;
+        this.eventBus = eventBus;
     }
 
     public void rename(final String id, final String name) {
@@ -24,6 +24,6 @@ public final class UserRenamer {
 
         this.userRepository.save(user);
 
-        this.domainEventPublisher.publish(user.pullDomainEvents());
+        this.eventBus.publish(user.pullDomainEvents());
     }
 }

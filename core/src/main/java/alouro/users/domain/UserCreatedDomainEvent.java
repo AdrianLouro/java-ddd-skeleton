@@ -1,10 +1,10 @@
 package alouro.users.domain;
 
-import alouro.domain.DomainEvent;
+import alouro.domain.event.DomainEvent;
 
 import java.util.Objects;
 
-public final class UserCreatedDomainEvent implements DomainEvent {
+public final class UserCreatedDomainEvent extends DomainEvent {
     private final String id;
     private final String name;
     private final String birthDate;

@@ -2,11 +2,11 @@ package alouro.users;
 
 import alouro.InfrastructureTestCase;
 import alouro.domain.Clock;
-import alouro.domain.DomainEvent;
-import alouro.domain.DomainEventPublisher;
+import alouro.domain.event.DomainEvent;
+import alouro.domain.event.EventBus;
 import alouro.infrastructure.SystemClock;
-import alouro.users.application.UserCreator;
-import alouro.users.application.UserRenamer;
+import alouro.users.application.create.UserCreator;
+import alouro.users.application.rename.UserRenamer;
 import alouro.users.domain.User;
 import alouro.users.domain.UserRepository;
 import alouro.users.infrastructure.InMemoryUserRepository;
@@ -19,16 +19,16 @@ public abstract class UsersModuleInfrastructureTestCase extends InfrastructureTe
 
     protected final UserRepository userRepository = new InMemoryUserRepository();
 
-    protected final DomainEventPublisher domainEventPublisher = new DomainEventPublisher() {
+    protected final EventBus eventBus = new EventBus() {
         @Override
         public void publish(List<DomainEvent> events) {
 
         }
     };
 
-    protected final UserCreator userCreator = new UserCreator(this.userRepository, this.domainEventPublisher, this.clock);
+    protected final UserCreator userCreator = new UserCreator(this.userRepository, this.eventBus, this.clock);
 
-    protected final UserRenamer userRenamer = new UserRenamer(this.userRepository, domainEventPublisher);
+    protected final UserRenamer userRenamer = new UserRenamer(this.userRepository, eventBus);
 
     protected final void save(final User user) {
         this.userRepository.save(user);

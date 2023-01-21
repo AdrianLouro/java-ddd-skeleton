@@ -1,7 +1,7 @@
 package alouro.users.infrastructure;
 
 import alouro.infrastructure.CliCommand;
-import alouro.users.application.UserRenamer;
+import alouro.users.application.rename.UserRenamer;
 
 import java.util.Map;
 

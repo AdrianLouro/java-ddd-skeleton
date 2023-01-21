@@ -1,14 +1,14 @@
 package alouro;
 
 import alouro.domain.ClockMock;
-import alouro.domain.DomainEventPublisherMock;
+import alouro.domain.EventBusMock;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 
 @TestMethodOrder(MethodOrderer.Random.class)
 public abstract class UnitTestCase {
     private ClockMock clock;
-    private DomainEventPublisherMock domainEventPublisher;
+    private EventBusMock eventBus;
 
     protected final ClockMock clock() {
         if (this.clock == null) {
@@ -18,11 +18,11 @@ public abstract class UnitTestCase {
         return this.clock;
     }
 
-    protected final DomainEventPublisherMock domainEventPublisher() {
-        if (this.domainEventPublisher == null) {
-            this.domainEventPublisher = new DomainEventPublisherMock();
+    protected final EventBusMock eventBus() {
+        if (this.eventBus == null) {
+            this.eventBus = new EventBusMock();
         }
 
-        return this.domainEventPublisher;
+        return this.eventBus;
     }
 }

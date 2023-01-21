@@ -1,4 +1,4 @@
-package alouro.users.application;
+package alouro.users.application.create;
 
 import alouro.domain.value_object.InvalidDateException;
 import alouro.domain.value_object.InvalidUuidException;
@@ -20,7 +20,7 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
     void setUp() {
         this.creator = new UserCreator(
                 this.userRepository().mock(),
-                this.domainEventPublisher().mock(),
+                this.eventBus().mock(),
                 this.clock().mock()
         );
     }
@@ -75,6 +75,6 @@ final class UserCreatorTestCase extends UsersModuleUnitTestCase {
         this.creator.create(user.id().value(), user.name().value(), user.birthDate().value());
 
         this.userRepository().shouldHaveSaved(user);
-        this.domainEventPublisher().shouldHavePublished(event);
+        this.eventBus().shouldHavePublished(event);
     }
 }

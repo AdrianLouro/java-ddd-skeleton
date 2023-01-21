@@ -1,7 +1,7 @@
 package alouro.users.infrastructure;
 
 import alouro.infrastructure.CliCommand;
-import alouro.users.application.UserCreator;
+import alouro.users.application.create.UserCreator;
 
 import java.util.Map;
 

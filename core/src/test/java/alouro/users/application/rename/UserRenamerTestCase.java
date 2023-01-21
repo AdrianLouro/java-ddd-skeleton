@@ -1,4 +1,4 @@
-package alouro.users.application;
+package alouro.users.application.rename;
 
 import alouro.users.UsersModuleUnitTestCase;
 import alouro.users.domain.*;
@@ -18,7 +18,7 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
     void setUp() {
         this.renamer = new UserRenamer(
                 this.userRepository().mock(),
-                this.domainEventPublisher().mock()
+                this.eventBus().mock()
         );
     }
 
@@ -43,7 +43,7 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
 
         this.renamer.rename(user.id().value(), user.name().value());
 
-        this.domainEventPublisher().shouldHaveNotPublishedAnyDomainEvent();
+        this.eventBus().shouldHaveNotPublishedAnyDomainEvent();
     }
 
     @Test
@@ -62,6 +62,6 @@ final class UserRenamerTestCase extends UsersModuleUnitTestCase {
         this.renamer.rename(user.id().value(), renamedUser.name().value());
 
         this.userRepository().shouldHaveSaved(renamedUser);
-        this.domainEventPublisher().shouldHavePublished(UserRenamedDomainEventObjectMother.from(user));
+        this.eventBus().shouldHavePublished(UserRenamedDomainEventObjectMother.from(user));
     }
 }
