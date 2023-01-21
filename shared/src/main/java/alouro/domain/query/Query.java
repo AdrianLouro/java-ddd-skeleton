@@ -1,4 +1,6 @@
 package alouro.domain.query;
 
-public interface Query {
+import alouro.domain.Message;
+
+public abstract class Query extends Message {
 }
