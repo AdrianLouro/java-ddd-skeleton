@@ -6,7 +6,7 @@ import alouro.users.application.create.CreateUserCommand;
 
 import java.util.Map;
 
-public final class CreateUserCliCommand extends CliCommand {
+public final class CreateUserCliCommand extends CliCommand<Void> {
 
     private final CommandBus commandBus;
 
@@ -15,7 +15,7 @@ public final class CreateUserCliCommand extends CliCommand {
     }
 
     @Override
-    public void execute(final Map<String, String> args) {
+    public Void execute(final Map<String, String> args) {
         this.commandBus.dispatch(
                 new CreateUserCommand(
                         args.get("id"),
@@ -23,5 +23,7 @@ public final class CreateUserCliCommand extends CliCommand {
                         args.get("birthDate")
                 )
         );
+
+        return null;
     }
 }

@@ -50,7 +50,7 @@ public final class User extends AggregateRoot {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(id, name, birthDate);
     }
 
     public UserId id() {

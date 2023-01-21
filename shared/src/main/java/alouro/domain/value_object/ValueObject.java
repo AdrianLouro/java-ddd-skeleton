@@ -24,6 +24,6 @@ public abstract class ValueObject<T> {
 
     @Override
     public final int hashCode() {
-        return super.hashCode();
+        return Objects.hash(value);
     }
 }

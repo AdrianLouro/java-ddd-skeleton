@@ -23,7 +23,7 @@ public final class UserRenamedDomainEvent extends DomainEvent {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(id, name);
     }
 
     public String id() {

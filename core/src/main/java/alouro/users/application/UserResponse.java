@@ -1,25 +1,30 @@
-package alouro.users.domain;
+package alouro.users.application;
 
-import alouro.domain.event.DomainEvent;
+import alouro.domain.query.Response;
+import alouro.users.domain.User;
 
 import java.util.Objects;
 
-public final class UserCreatedDomainEvent extends DomainEvent {
+public final class UserResponse implements Response {
     private final String id;
     private final String name;
     private final String birthDate;
 
-    public UserCreatedDomainEvent(final String id, final String name, final String birthDate) {
+    public UserResponse(final String id, final String name, final String birthDate) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
+    }
+
+    public static UserResponse from(final User user) {
+        return new UserResponse(user.id().value(), user.name().value(), user.birthDate().value());
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserCreatedDomainEvent that = (UserCreatedDomainEvent) o;
+        UserResponse that = (UserResponse) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(birthDate, that.birthDate);
     }
 

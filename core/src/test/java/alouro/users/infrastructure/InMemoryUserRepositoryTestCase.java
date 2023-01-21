@@ -20,14 +20,6 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
     }
 
     @Test
-    void should_not_find_a_non_existent_user() {
-        assertThat(
-                this.repository.search(UserIdObjectMother.random()).isEmpty(),
-                is(true)
-        );
-    }
-
-    @Test
     void should_save_a_new_user() {
         final var user = UserObjectMother.random(this.clock());
 
@@ -36,6 +28,14 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
         assertThat(
                 this.repository.search(user.id()).orElseThrow(),
                 is(equalTo(user))
+        );
+    }
+
+    @Test
+    void should_not_find_a_non_existent_user() {
+        assertThat(
+                this.repository.search(UserIdObjectMother.random()).isEmpty(),
+                is(true)
         );
     }
 

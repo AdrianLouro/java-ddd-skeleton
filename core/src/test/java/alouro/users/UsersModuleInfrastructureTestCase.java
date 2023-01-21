@@ -5,6 +5,7 @@ import alouro.domain.Clock;
 import alouro.domain.command.CommandBus;
 import alouro.domain.dependency_injection.Container;
 import alouro.domain.event.EventBus;
+import alouro.domain.query.QueryBus;
 import alouro.users.domain.User;
 import alouro.users.domain.UserRepository;
 
@@ -16,6 +17,7 @@ public abstract class UsersModuleInfrastructureTestCase extends InfrastructureTe
     private UserRepository userRepository;
     private EventBus eventBus;
     private CommandBus commandBus;
+    private QueryBus queryBus;
 
     private Container container() {
         if (this.container == null) {
@@ -55,6 +57,14 @@ public abstract class UsersModuleInfrastructureTestCase extends InfrastructureTe
         }
 
         return this.commandBus;
+    }
+
+    protected final QueryBus queryBus() {
+        if (this.queryBus == null) {
+            this.queryBus = this.container().get(QueryBus.class);
+        }
+
+        return this.queryBus;
     }
 
     protected final void save(final User user) {

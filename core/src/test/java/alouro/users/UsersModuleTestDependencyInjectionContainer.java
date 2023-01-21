@@ -4,11 +4,15 @@ import alouro.domain.Clock;
 import alouro.domain.command.CommandBus;
 import alouro.domain.event.DomainEvent;
 import alouro.domain.event.EventBus;
+import alouro.domain.query.QueryBus;
 import alouro.infrastructure.SystemClock;
 import alouro.infrastructure.command.InMemoryCommandBus;
 import alouro.infrastructure.dependency_injection.MyDependencyInjectionContainer;
+import alouro.infrastructure.query.InMemoryQueryBus;
 import alouro.users.application.create.CreateUserCommandHandler;
 import alouro.users.application.create.UserCreator;
+import alouro.users.application.find.FindUserQueryHandler;
+import alouro.users.application.find.UserFinder;
 import alouro.users.application.rename.RenameUserCommandHandler;
 import alouro.users.application.rename.UserRenamer;
 import alouro.users.domain.UserRepository;
@@ -50,6 +54,18 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
                 ),
 
                 new SimpleImmutableEntry<>(
+                        QueryBus.class,
+                        () -> new InMemoryQueryBus(this)
+                ),
+
+                new SimpleImmutableEntry<>(
+                        alouro.users.domain.UserFinder.class,
+                        () -> new alouro.users.domain.UserFinder(
+                                this.get(UserRepository.class)
+                        )
+                ),
+
+                new SimpleImmutableEntry<>(
                         UserCreator.class,
                         () -> new UserCreator(
                                 this.get(UserRepository.class),
@@ -67,6 +83,13 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
                 ),
 
                 new SimpleImmutableEntry<>(
+                        UserFinder.class,
+                        () -> new UserFinder(
+                                this.get(alouro.users.domain.UserFinder.class)
+                        )
+                ),
+
+                new SimpleImmutableEntry<>(
                         CreateUserCommandHandler.class,
                         () -> new CreateUserCommandHandler(this.get(UserCreator.class))
                 ),
@@ -74,6 +97,11 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
                 new SimpleImmutableEntry<>(
                         RenameUserCommandHandler.class,
                         () -> new RenameUserCommandHandler(this.get(UserRenamer.class))
+                ),
+
+                new SimpleImmutableEntry<>(
+                        FindUserQueryHandler.class,
+                        () -> new FindUserQueryHandler(this.get(UserFinder.class))
                 )
         );
     }

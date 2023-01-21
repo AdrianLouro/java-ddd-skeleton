@@ -17,16 +17,16 @@ public final class InMemoryUserRepository implements UserRepository {
     private final Map<String, User> users = new HashMap<>();
 
     @Override
-    public Optional<User> search(final UserId id) {
-        return Optional.ofNullable(this.users.get(id.value()));
-    }
-
-    @Override
     public void save(final User user) {
         if (this.search(user.id()).isPresent()) {
             return;
         }
 
         this.users.put(user.id().value(), user);
+    }
+
+    @Override
+    public Optional<User> search(final UserId id) {
+        return Optional.ofNullable(this.users.get(id.value()));
     }
 }

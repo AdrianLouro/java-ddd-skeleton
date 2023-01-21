@@ -6,7 +6,7 @@ import alouro.users.application.rename.RenameUserCommand;
 
 import java.util.Map;
 
-public final class RenameUserCliCommand extends CliCommand {
+public final class RenameUserCliCommand extends CliCommand<Void> {
 
     private final CommandBus commandBus;
 
@@ -15,12 +15,14 @@ public final class RenameUserCliCommand extends CliCommand {
     }
 
     @Override
-    public void execute(final Map<String, String> args) {
+    public Void execute(final Map<String, String> args) {
         this.commandBus.dispatch(
                 new RenameUserCommand(
                         args.get("id"),
                         args.get("name")
                 )
         );
+
+        return null;
     }
 }
