@@ -5,13 +5,13 @@ import alouro.users.domain.UserId;
 
 public final class UserFinder {
 
-    private final alouro.users.domain.UserFinder userFinder;
+    private final alouro.users.domain.UserFinder finder;
 
-    public UserFinder(final alouro.users.domain.UserFinder userFinder) {
-        this.userFinder = userFinder;
+    public UserFinder(final alouro.users.domain.UserFinder finder) {
+        this.finder = finder;
     }
 
     public UserResponse find(final UserId id) {
-        return UserResponse.from(this.userFinder.find(id));
+        return UserResponse.from(this.finder.find(id));
     }
 }
