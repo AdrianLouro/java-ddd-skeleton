@@ -29,7 +29,7 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
 
     @Test
     void should_save_a_new_user() {
-        final var user = UserObjectMother.random(this.clock);
+        final var user = UserObjectMother.random(this.clock());
 
         this.repository.save(user);
 
@@ -41,7 +41,7 @@ final class InMemoryUserRepositoryTestCase extends UsersModuleInfrastructureTest
 
     @Test
     void should_find_an_existing_user() {
-        final var user = UserObjectMother.random(this.clock);
+        final var user = UserObjectMother.random(this.clock());
 
         this.repository.save(user);
 

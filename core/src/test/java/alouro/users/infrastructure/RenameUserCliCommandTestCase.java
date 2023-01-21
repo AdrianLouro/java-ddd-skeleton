@@ -21,12 +21,12 @@ final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
 
     @BeforeEach
     void setUp() {
-        this.cliCommand = new RenameUserCliCommand(this.commandBus);
+        this.cliCommand = new RenameUserCliCommand(this.commandBus());
     }
 
     @Test
     void should_raise_an_exception_if_the_user_does_not_exist() {
-        final var user = UserObjectMother.random(this.clock);
+        final var user = UserObjectMother.random(this.clock());
 
         final Runnable executeCommand = () -> this.cliCommand.execute(
                 Map.ofEntries(
@@ -40,11 +40,11 @@ final class RenameUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
 
     @Test
     void should_rename_a_user() {
-        final var user = UserObjectMother.random(this.clock);
+        final var user = UserObjectMother.random(this.clock());
         final var newName = "new name";
 
         final var updatedUser = UserBuilder
-                .fromUser(user, this.clock)
+                .fromUser(user, this.clock())
                 .withName(newName)
                 .build();
 

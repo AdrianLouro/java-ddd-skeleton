@@ -1,6 +1,7 @@
 package alouro.infrastructure.dependency_injection;
 
 import alouro.domain.dependency_injection.Container;
+import alouro.domain.dependency_injection.CouldNotBuildDependencyException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,15 +20,15 @@ public abstract class MyDependencyInjectionContainer implements Container {
     protected abstract Map<Class<?>, Callable<?>> dependenciesBuilders();
 
     @Override
-    public <T> T get(final Class<T> id) {
+    public <T> T get(final Class<T> dependencyClass) {
         try {
-            if (!this.dependencies.containsKey(id)) {
-                this.dependencies.put(id, this.dependenciesBuilders.get(id).call());
+            if (!this.dependencies.containsKey(dependencyClass)) {
+                this.dependencies.put(dependencyClass, this.dependenciesBuilders.get(dependencyClass).call());
             }
 
-            return (T) dependencies.get(id);
+            return (T) dependencies.get(dependencyClass);
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            throw new CouldNotBuildDependencyException(dependencyClass.getCanonicalName());
         }
     }
 }

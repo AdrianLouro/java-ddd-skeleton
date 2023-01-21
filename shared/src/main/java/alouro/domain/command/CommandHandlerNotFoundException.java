@@ -2,16 +2,16 @@ package alouro.domain.command;
 
 public final class CommandHandlerNotFoundException extends RuntimeException {
 
-    private final String commandHandlerClass;
+    private final String commandHandlerClassName;
 
-    public CommandHandlerNotFoundException(final String commandHandlerClass) {
+    public CommandHandlerNotFoundException(final String commandHandlerClassName) {
         super();
 
-        this.commandHandlerClass = commandHandlerClass;
+        this.commandHandlerClassName = commandHandlerClassName;
     }
 
     @Override
     public String getMessage() {
-        return "Command handler not found: " + this.commandHandlerClass;
+        return "Command handler not found: " + this.commandHandlerClassName;
     }
 }

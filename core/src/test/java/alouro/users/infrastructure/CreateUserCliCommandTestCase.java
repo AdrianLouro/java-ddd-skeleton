@@ -18,12 +18,12 @@ final class CreateUserCliCommandTestCase extends UsersModuleInfrastructureTestCa
 
     @BeforeEach
     void setUp() {
-        this.cliCommand = new CreateUserCliCommand(this.commandBus);
+        this.cliCommand = new CreateUserCliCommand(this.commandBus());
     }
 
     @Test
     void should_create_a_user() {
-        final var user = UserObjectMother.random(this.clock);
+        final var user = UserObjectMother.random(this.clock());
 
         this.cliCommand.execute(
                 Map.ofEntries(
