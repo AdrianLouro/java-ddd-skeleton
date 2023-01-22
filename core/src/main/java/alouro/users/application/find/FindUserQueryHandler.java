@@ -14,6 +14,6 @@ public final class FindUserQueryHandler implements QueryHandler<FindUserQuery, U
 
     @Override
     public UserResponse handle(final FindUserQuery query) {
-        return this.finder.find(new UserId(query.id()));
+        return this.finder.find(new UserId(query.id())); // TODO: should the ValueObject be instantiated here or in an inner layer ???
     }
 }
