@@ -1,8 +1,8 @@
 package alouro.core.users.infrastructure;
 
+import alouro.core.users.application.create.CreateUserCommand;
 import alouro.shared.domain.command.CommandBus;
 import alouro.shared.infrastructure.CliCommand;
-import alouro.core.users.application.create.CreateUserCommand;
 
 import java.util.Map;
 

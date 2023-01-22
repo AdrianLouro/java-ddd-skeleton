@@ -1,9 +1,9 @@
 package alouro.core.users.application.create;
 
-import alouro.shared.domain.Clock;
-import alouro.shared.domain.event.EventBus;
 import alouro.core.users.domain.User;
 import alouro.core.users.domain.UserRepository;
+import alouro.shared.domain.Clock;
+import alouro.shared.domain.event.EventBus;
 
 public final class UserCreator {
     private final UserRepository userRepository;

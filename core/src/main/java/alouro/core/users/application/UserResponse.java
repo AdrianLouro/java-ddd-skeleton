@@ -1,7 +1,7 @@
 package alouro.core.users.application;
 
-import alouro.shared.domain.query.Response;
 import alouro.core.users.domain.User;
+import alouro.shared.domain.query.Response;
 
 import java.util.Objects;
 

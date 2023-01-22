@@ -1,7 +1,10 @@
 package alouro.core.users.application.rename;
 
+import alouro.core.users.domain.UserFinder;
+import alouro.core.users.domain.UserId;
+import alouro.core.users.domain.UserName;
+import alouro.core.users.domain.UserRepository;
 import alouro.shared.domain.event.EventBus;
-import alouro.core.users.domain.*;
 
 public final class UserRenamer {
     private final UserFinder userFinder;

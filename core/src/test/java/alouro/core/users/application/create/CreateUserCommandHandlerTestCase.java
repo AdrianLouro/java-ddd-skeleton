@@ -1,9 +1,9 @@
 package alouro.core.users.application.create;
 
-import alouro.shared.domain.value_object.InvalidDateException;
-import alouro.shared.domain.value_object.InvalidUuidException;
 import alouro.core.users.UsersModuleUnitTestCase;
 import alouro.core.users.domain.*;
+import alouro.shared.domain.value_object.InvalidDateException;
+import alouro.shared.domain.value_object.InvalidUuidException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

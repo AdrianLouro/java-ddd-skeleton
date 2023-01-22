@@ -1,5 +1,13 @@
 package alouro.core.users;
 
+import alouro.core.users.application.create.CreateUserCommandHandler;
+import alouro.core.users.application.create.UserCreator;
+import alouro.core.users.application.find.FindUserQueryHandler;
+import alouro.core.users.application.find.UserFinder;
+import alouro.core.users.application.rename.RenameUserCommandHandler;
+import alouro.core.users.application.rename.UserRenamer;
+import alouro.core.users.domain.UserRepository;
+import alouro.core.users.infrastructure.InMemoryUserRepository;
 import alouro.shared.domain.Clock;
 import alouro.shared.domain.command.CommandBus;
 import alouro.shared.domain.event.DomainEvent;
@@ -9,14 +17,6 @@ import alouro.shared.infrastructure.SystemClock;
 import alouro.shared.infrastructure.command.InMemoryCommandBus;
 import alouro.shared.infrastructure.dependency_injection.MyDependencyInjectionContainer;
 import alouro.shared.infrastructure.query.InMemoryQueryBus;
-import alouro.core.users.application.create.CreateUserCommandHandler;
-import alouro.core.users.application.create.UserCreator;
-import alouro.core.users.application.find.FindUserQueryHandler;
-import alouro.core.users.application.find.UserFinder;
-import alouro.core.users.application.rename.RenameUserCommandHandler;
-import alouro.core.users.application.rename.UserRenamer;
-import alouro.core.users.domain.UserRepository;
-import alouro.core.users.infrastructure.InMemoryUserRepository;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.List;

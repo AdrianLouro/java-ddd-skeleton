@@ -1,7 +1,7 @@
 package alouro.core.users;
 
-import alouro.shared.UnitTestCase;
 import alouro.core.users.domain.UserRepositoryMock;
+import alouro.shared.UnitTestCase;
 
 public abstract class UsersModuleUnitTestCase extends UnitTestCase {
     private UserRepositoryMock userRepository;

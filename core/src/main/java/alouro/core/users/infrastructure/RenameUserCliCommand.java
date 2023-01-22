@@ -1,8 +1,8 @@
 package alouro.core.users.infrastructure;
 
+import alouro.core.users.application.rename.RenameUserCommand;
 import alouro.shared.domain.command.CommandBus;
 import alouro.shared.infrastructure.CliCommand;
-import alouro.core.users.application.rename.RenameUserCommand;
 
 import java.util.Map;
 

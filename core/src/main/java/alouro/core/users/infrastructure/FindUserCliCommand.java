@@ -1,9 +1,9 @@
 package alouro.core.users.infrastructure;
 
-import alouro.shared.domain.query.QueryBus;
-import alouro.shared.infrastructure.CliCommand;
 import alouro.core.users.application.UserResponse;
 import alouro.core.users.application.find.FindUserQuery;
+import alouro.shared.domain.query.QueryBus;
+import alouro.shared.infrastructure.CliCommand;
 
 import java.util.Map;
 

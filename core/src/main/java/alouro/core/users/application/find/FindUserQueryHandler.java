@@ -1,8 +1,8 @@
 package alouro.core.users.application.find;
 
-import alouro.shared.domain.query.QueryHandler;
 import alouro.core.users.application.UserResponse;
 import alouro.core.users.domain.UserId;
+import alouro.shared.domain.query.QueryHandler;
 
 public final class FindUserQueryHandler implements QueryHandler<FindUserQuery, UserResponse> {
 

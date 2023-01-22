@@ -1,13 +1,13 @@
 package alouro.core.users;
 
+import alouro.core.users.domain.User;
+import alouro.core.users.domain.UserRepository;
 import alouro.shared.InfrastructureTestCase;
 import alouro.shared.domain.Clock;
 import alouro.shared.domain.command.CommandBus;
 import alouro.shared.domain.dependency_injection.Container;
 import alouro.shared.domain.event.EventBus;
 import alouro.shared.domain.query.QueryBus;
-import alouro.core.users.domain.User;
-import alouro.core.users.domain.UserRepository;
 
 import java.util.Optional;
 
