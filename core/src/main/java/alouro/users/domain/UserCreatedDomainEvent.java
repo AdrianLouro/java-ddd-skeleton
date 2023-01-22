@@ -15,6 +15,10 @@ public final class UserCreatedDomainEvent extends DomainEvent {
         this.birthDate = birthDate;
     }
 
+    public static UserCreatedDomainEvent from(final User user) {
+        return new UserCreatedDomainEvent(user.id().value(), user.name().value(), user.birthDate().value());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -29,13 +29,7 @@ public final class User extends AggregateRoot {
     public static User create(final String id, final String name, final String birthDate, final Clock clock) {
         final var user = fromPrimitives(id, name, birthDate, clock);
 
-        user.push(
-                new UserCreatedDomainEvent(
-                        user.id().value(),
-                        user.name().value(),
-                        user.birthDate().value()
-                )
-        );
+        user.push(UserCreatedDomainEvent.from(user));
 
         return user;
     }
