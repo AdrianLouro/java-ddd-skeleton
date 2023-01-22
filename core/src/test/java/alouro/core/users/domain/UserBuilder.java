@@ -4,10 +4,10 @@ import alouro.shared.domain.Clock;
 
 public final class UserBuilder {
 
+    private final Clock clock;
     private String id;
     private String name;
     private String birthDate;
-    private final Clock clock;
 
     private UserBuilder(final String id, final String name, final String birthDate, final Clock clock) {
         this.id = id;
