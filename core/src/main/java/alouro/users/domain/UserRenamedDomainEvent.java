@@ -13,6 +13,10 @@ public final class UserRenamedDomainEvent extends DomainEvent {
         this.name = name;
     }
 
+    public static UserRenamedDomainEvent from(final User user) {
+        return new UserRenamedDomainEvent(user.id().value(), user.name().value());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

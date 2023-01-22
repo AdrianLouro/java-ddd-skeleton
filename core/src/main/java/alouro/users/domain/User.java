@@ -66,6 +66,6 @@ public final class User extends AggregateRoot {
 
         this.name = name;
 
-        this.push(new UserRenamedDomainEvent(this.id.value(), this.name.value()));
+        this.push(UserRenamedDomainEvent.from(this));
     }
 }
