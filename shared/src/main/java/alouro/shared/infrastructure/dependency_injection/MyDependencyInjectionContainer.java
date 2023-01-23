@@ -1,7 +1,7 @@
 package alouro.shared.infrastructure.dependency_injection;
 
 import alouro.shared.domain.dependency_injection.Container;
-import alouro.shared.domain.dependency_injection.CouldNotBuildDependencyException;
+import alouro.shared.domain.dependency_injection.CouldNotResolveDependencyException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,24 +11,24 @@ public abstract class MyDependencyInjectionContainer implements Container {
 
     private final Map<Class<?>, Object> dependencies = new HashMap<>();
 
-    private final Map<Class<?>, Callable<?>> dependenciesBuilders;
+    private final Map<Class<?>, Callable<?>> dependenciesResolvers;
 
     protected MyDependencyInjectionContainer() {
-        this.dependenciesBuilders = this.dependenciesBuilders();
+        this.dependenciesResolvers = this.dependenciesResolvers();
     }
 
-    protected abstract Map<Class<?>, Callable<?>> dependenciesBuilders();
+    protected abstract Map<Class<?>, Callable<?>> dependenciesResolvers();
 
     @Override
     public <T> T get(final Class<T> dependencyClass) {
         try {
             if (!this.dependencies.containsKey(dependencyClass)) {
-                this.dependencies.put(dependencyClass, this.dependenciesBuilders.get(dependencyClass).call());
+                this.dependencies.put(dependencyClass, this.dependenciesResolvers.get(dependencyClass).call());
             }
 
             return (T) dependencies.get(dependencyClass);
         } catch (Exception exception) {
-            throw new CouldNotBuildDependencyException(dependencyClass.getCanonicalName());
+            throw new CouldNotResolveDependencyException(dependencyClass.getCanonicalName());
         }
     }
 }
