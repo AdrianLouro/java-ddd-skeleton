@@ -15,16 +15,15 @@ public final class LogCommandMiddleware extends Middleware<Command, Void> {
     public Void handle(final Command command) {
         final var commandName = command.getClass().getSimpleName();
 
-        this.logger.info(String.format("Command <%s> received", commandName));
-
         try {
+            this.logger.info(String.format("Command <%s> received", commandName));
             this.handleNextMiddleware(command);
+            this.logger.info(String.format("Command <%s> executed", commandName));
         } catch (Exception exception) {
             this.logger.critical(String.format("Command <%s> failed: %s", commandName, exception.getMessage()));
+
             throw exception;
         }
-
-        this.logger.info(String.format("Command <%s> executed", commandName));
 
         return null;
     }
