@@ -11,6 +11,6 @@ public final class UserFinder {
     public User find(final UserId id) {
         return this.userRepository
                 .search(id)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 }

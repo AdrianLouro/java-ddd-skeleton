@@ -19,7 +19,7 @@ public class Date extends StringValueObject {
         try {
             LocalDate.parse(this.value());
         } catch (DateTimeParseException exception) {
-            throw new InvalidDateException();
+            throw new InvalidDateException(this.value());
         }
     }
 }

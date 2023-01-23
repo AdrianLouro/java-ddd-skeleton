@@ -15,7 +15,7 @@ public final class UserBirthDate extends Date {
 
     private void ensureIsValidUserBirthDate(Clock clock) {
         if (Period.between(this.localDate(), clock.now().toLocalDate()).getYears() < 18) {
-            throw new UserCannotBeUnderageException();
+            throw new UserCannotBeUnderageException(this.value());
         }
     }
 }

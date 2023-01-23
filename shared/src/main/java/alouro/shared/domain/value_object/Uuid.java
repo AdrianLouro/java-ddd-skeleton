@@ -12,13 +12,13 @@ public class Uuid extends StringValueObject {
 
     private void ensureIsValidUuid() {
         if (this.value() == null) {
-            throw new InvalidUuidException();
+            throw new InvalidUuidException(this.value());
         }
 
         final var uuidRegex = Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
 
         if (!uuidRegex.matcher(this.value()).matches()) {
-            throw new InvalidUuidException();
+            throw new InvalidUuidException(this.value());
         }
     }
 }

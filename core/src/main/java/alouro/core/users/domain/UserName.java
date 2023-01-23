@@ -12,11 +12,11 @@ public final class UserName extends StringValueObject {
 
     private void ensureValidUserName() {
         if (this.value().length() < 2) {
-            throw new UserNameTooShortException();
+            throw new UserNameTooShortException(this.value());
         }
 
         if (this.value().length() > 32) {
-            throw new UserNameTooLongException();
+            throw new UserNameTooLongException(this.value());
         }
     }
 }
