@@ -9,10 +9,14 @@ import alouro.core.users.application.rename.UserRenamer;
 import alouro.core.users.domain.UserRepository;
 import alouro.core.users.infrastructure.InMemoryUserRepository;
 import alouro.shared.domain.Clock;
+import alouro.shared.domain.Logger;
 import alouro.shared.domain.command.CommandBus;
+import alouro.shared.domain.command.HandleCommandMiddleware;
+import alouro.shared.domain.command.LogCommandMiddleware;
 import alouro.shared.domain.event.DomainEvent;
 import alouro.shared.domain.event.EventBus;
 import alouro.shared.domain.query.QueryBus;
+import alouro.shared.infrastructure.StandardOutputLogger;
 import alouro.shared.infrastructure.SystemClock;
 import alouro.shared.infrastructure.command.InMemoryCommandBus;
 import alouro.shared.infrastructure.dependency_injection.MyDependencyInjectionContainer;
@@ -34,8 +38,24 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
                 ),
 
                 new SimpleImmutableEntry<>(
+                        Logger.class,
+                        () -> new StandardOutputLogger()
+                ),
+
+                new SimpleImmutableEntry<>(
                         UserRepository.class,
                         () -> new InMemoryUserRepository()
+                ),
+
+                new SimpleImmutableEntry<>(
+                        HandleCommandMiddleware.class,
+                        () -> new HandleCommandMiddleware(this)
+                ),
+                new SimpleImmutableEntry<>(
+                        LogCommandMiddleware.class,
+                        () -> new LogCommandMiddleware(
+                                this.get(Logger.class)
+                        )
                 ),
 
                 new SimpleImmutableEntry<>(
@@ -50,7 +70,10 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
 
                 new SimpleImmutableEntry<>(
                         CommandBus.class,
-                        () -> new InMemoryCommandBus(this)
+                        () -> new InMemoryCommandBus(
+                                this.get(LogCommandMiddleware.class),
+                                this.get(HandleCommandMiddleware.class)
+                        )
                 ),
 
                 new SimpleImmutableEntry<>(
