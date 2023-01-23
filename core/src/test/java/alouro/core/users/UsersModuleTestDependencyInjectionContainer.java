@@ -15,6 +15,8 @@ import alouro.shared.domain.command.HandleCommandMiddleware;
 import alouro.shared.domain.command.LogCommandMiddleware;
 import alouro.shared.domain.event.DomainEvent;
 import alouro.shared.domain.event.EventBus;
+import alouro.shared.domain.query.HandleQueryMiddleware;
+import alouro.shared.domain.query.LogQueryMiddleware;
 import alouro.shared.domain.query.QueryBus;
 import alouro.shared.infrastructure.StandardOutputLogger;
 import alouro.shared.infrastructure.SystemClock;
@@ -51,9 +53,22 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
                         HandleCommandMiddleware.class,
                         () -> new HandleCommandMiddleware(this)
                 ),
+
+                new SimpleImmutableEntry<>(
+                        HandleQueryMiddleware.class,
+                        () -> new HandleQueryMiddleware(this)
+                ),
+
                 new SimpleImmutableEntry<>(
                         LogCommandMiddleware.class,
                         () -> new LogCommandMiddleware(
+                                this.get(Logger.class)
+                        )
+                ),
+
+                new SimpleImmutableEntry<>(
+                        LogQueryMiddleware.class,
+                        () -> new LogQueryMiddleware(
                                 this.get(Logger.class)
                         )
                 ),
@@ -78,7 +93,10 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
 
                 new SimpleImmutableEntry<>(
                         QueryBus.class,
-                        () -> new InMemoryQueryBus(this)
+                        () -> new InMemoryQueryBus(
+                                this.get(LogQueryMiddleware.class),
+                                this.get(HandleQueryMiddleware.class)
+                        )
                 ),
 
                 new SimpleImmutableEntry<>(

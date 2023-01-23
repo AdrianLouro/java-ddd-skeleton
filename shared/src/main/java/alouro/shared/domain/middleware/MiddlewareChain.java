@@ -1,13 +1,13 @@
 package alouro.shared.domain.middleware;
 
 public final class MiddlewareChain {
-    private final Middleware<Object> first;
+    private final Middleware<Object, Object> first;
 
-    private MiddlewareChain(final Middleware<Object> first) {
+    private MiddlewareChain(final Middleware<Object, Object> first) {
         this.first = first;
     }
 
-    public static MiddlewareChain link(final Middleware<Object>[] middlewares) {
+    public static MiddlewareChain link(final Middleware<Object, Object>[] middlewares) {
         if (middlewares.length == 0) {
             throw new CannotLinkEmptyMiddlewareList();
         }
@@ -22,7 +22,7 @@ public final class MiddlewareChain {
         return new MiddlewareChain(middlewares[0]);
     }
 
-    public void invoke(final Object context) {
-        first.handle(context);
+    public Object handle(final Object context) {
+        return first.handle(context);
     }
 }

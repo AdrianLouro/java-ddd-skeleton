@@ -15,6 +15,6 @@ public final class InMemoryCommandBus implements CommandBus {
 
     @Override
     public void dispatch(final Command command) {
-        this.middlewareChain.invoke(command);
+        this.middlewareChain.handle(command);
     }
 }

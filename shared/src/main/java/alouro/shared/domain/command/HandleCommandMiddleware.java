@@ -3,7 +3,7 @@ package alouro.shared.domain.command;
 import alouro.shared.domain.dependency_injection.Container;
 import alouro.shared.domain.middleware.Middleware;
 
-public final class HandleCommandMiddleware extends Middleware<Command> {
+public final class HandleCommandMiddleware extends Middleware<Command, Void> {
 
     private final Container container;
 
@@ -12,7 +12,7 @@ public final class HandleCommandMiddleware extends Middleware<Command> {
     }
 
     @Override
-    public void handle(final Command command) {
+    public Void handle(final Command command) {
         final var commandHandlerClassName = command.getClass().getCanonicalName() + "Handler";
 
         try {
@@ -24,5 +24,7 @@ public final class HandleCommandMiddleware extends Middleware<Command> {
         } catch (ClassNotFoundException exception) {
             throw new CommandHandlerNotFoundException(commandHandlerClassName);
         }
+
+        return null;
     }
 }
