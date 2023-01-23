@@ -32,7 +32,7 @@ import java.util.concurrent.Callable;
 public final class UsersModuleTestDependencyInjectionContainer extends MyDependencyInjectionContainer {
 
     @Override
-    protected Map<Class<?>, Callable<?>> dependenciesResolvers() {
+    protected Map<Class<?>, Callable<Object>> dependenciesResolvers() {
         return Map.ofEntries(
                 new SimpleImmutableEntry<>(
                         Clock.class,

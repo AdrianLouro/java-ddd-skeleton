@@ -11,13 +11,13 @@ public abstract class MyDependencyInjectionContainer implements Container {
 
     private final Map<Class<?>, Object> dependencies = new HashMap<>();
 
-    private final Map<Class<?>, Callable<?>> dependenciesResolvers;
+    private final Map<Class<?>, Callable<Object>> dependenciesResolvers;
 
     protected MyDependencyInjectionContainer() {
         this.dependenciesResolvers = this.dependenciesResolvers();
     }
 
-    protected abstract Map<Class<?>, Callable<?>> dependenciesResolvers();
+    protected abstract Map<Class<?>, Callable<Object>> dependenciesResolvers();
 
     @Override
     public <T> T get(final Class<T> dependencyClass) {

@@ -20,6 +20,6 @@ public abstract class Middleware<C, R> {
             return null;
         }
 
-        return this.next().get().handle(context);
+        return this.next().orElseThrow().handle(context);
     }
 }
