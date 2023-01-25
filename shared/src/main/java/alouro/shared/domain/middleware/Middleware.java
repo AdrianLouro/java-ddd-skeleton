@@ -16,10 +16,8 @@ public abstract class Middleware<C, R> {
     }
 
     public R handleNextMiddleware(final C context) {
-        if (this.next().isEmpty()) {
-            return null;
-        }
-
-        return this.next().orElseThrow().handle(context);
+        return this.next()
+                .map(next -> next.handle(context))
+                .orElse(null);
     }
 }

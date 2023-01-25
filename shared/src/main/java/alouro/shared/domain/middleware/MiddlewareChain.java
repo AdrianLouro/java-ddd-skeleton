@@ -9,7 +9,7 @@ public final class MiddlewareChain {
 
     public static MiddlewareChain link(final Middleware<Object, Object>[] middlewares) {
         if (middlewares.length == 0) {
-            throw new CannotLinkEmptyMiddlewareList();
+            throw new CannotLinkEmptyMiddlewareListException();
         }
 
         for (int index = 0; index < middlewares.length - 1; index++) {

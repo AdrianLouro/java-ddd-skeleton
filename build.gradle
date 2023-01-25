@@ -10,6 +10,7 @@ allprojects {
 
     dependencies {
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.+'
+        testImplementation 'org.junit.jupiter:junit-jupiter-params:5.+'
         testImplementation 'org.mockito:mockito-core:4.+'
         testImplementation 'org.hamcrest:hamcrest:2.+'
         testImplementation 'com.github.javafaker:javafaker:1.+'

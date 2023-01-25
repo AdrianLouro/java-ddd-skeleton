@@ -10,6 +10,7 @@ import alouro.shared.domain.event.EventBus;
 import alouro.shared.domain.query.QueryBus;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public abstract class UsersModuleInfrastructureTestCase extends InfrastructureTestCase {
     private Container container;
@@ -67,8 +68,8 @@ public abstract class UsersModuleInfrastructureTestCase extends InfrastructureTe
         return this.queryBus;
     }
 
-    protected final void save(final User user) {
-        this.userRepository().save(user);
+    protected final void save(final User... users) {
+        Stream.of(users).forEach(user -> this.userRepository().save(user));
     }
 
     protected final Optional<User> search(final User user) {

@@ -1,12 +1,17 @@
 package alouro.core.users.domain;
 
 
+import alouro.core.users.application.UserResponse;
 import alouro.shared.domain.AggregateRoot;
 import alouro.shared.domain.Clock;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 
 public final class User extends AggregateRoot {
+    public static final Integer MIN_ELDER_AGE = 65;
+    public static final Integer MIN_AGE = 18;
 
     private final UserId id;
     private UserName name;
@@ -26,6 +31,15 @@ public final class User extends AggregateRoot {
         );
     }
 
+    public static User fromUserResponse(final UserResponse userResponse, final Clock clock) {
+        return User.fromPrimitives(
+                userResponse.id(),
+                userResponse.name(),
+                userResponse.birthDate(),
+                clock
+        );
+    }
+
     public static User create(final String id, final String name, final String birthDate, final Clock clock) {
         final var user = fromPrimitives(id, name, birthDate, clock);
 
@@ -35,7 +49,7 @@ public final class User extends AggregateRoot {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
@@ -57,6 +71,17 @@ public final class User extends AggregateRoot {
 
     public UserBirthDate birthDate() {
         return birthDate;
+    }
+
+    public Integer age(final Clock clock) {
+        final var birthdayLocalDate = LocalDate.parse(this.birthDate.value());
+        final var currentLocalDate = clock.now().toLocalDate();
+
+        return Period.between(birthdayLocalDate, currentLocalDate).getYears();
+    }
+
+    public boolean isElder(final Clock clock) {
+        return this.age(clock) >= MIN_ELDER_AGE;
     }
 
     public void renameWith(final UserName name) {

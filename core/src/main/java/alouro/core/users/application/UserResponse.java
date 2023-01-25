@@ -16,12 +16,12 @@ public final class UserResponse implements Response {
         this.birthDate = birthDate;
     }
 
-    public static UserResponse from(final User user) {
+    public static UserResponse fromAggregate(final User user) {
         return new UserResponse(user.id().value(), user.name().value(), user.birthDate().value());
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserResponse that = (UserResponse) o;

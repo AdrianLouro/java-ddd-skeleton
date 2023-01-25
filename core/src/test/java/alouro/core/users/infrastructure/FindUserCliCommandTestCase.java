@@ -50,7 +50,7 @@ final class FindUserCliCommandTestCase extends UsersModuleInfrastructureTestCase
 
         assertThat(
                 userResponse,
-                is(equalTo(UserResponse.from(user)))
+                is(equalTo(UserResponse.fromAggregate(user)))
         );
     }
 }

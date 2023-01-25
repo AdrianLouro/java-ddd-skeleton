@@ -6,6 +6,8 @@ import alouro.core.users.application.find.FindUserQueryHandler;
 import alouro.core.users.application.find.UserFinder;
 import alouro.core.users.application.rename.RenameUserCommandHandler;
 import alouro.core.users.application.rename.UserRenamer;
+import alouro.core.users.application.search_elder.ElderUsersSearcher;
+import alouro.core.users.application.search_elder.SearchElderUsersQueryHandler;
 import alouro.core.users.domain.UserRepository;
 import alouro.core.users.infrastructure.InMemoryUserRepository;
 import alouro.shared.domain.Clock;
@@ -46,7 +48,9 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
 
                 new SimpleImmutableEntry<>(
                         UserRepository.class,
-                        () -> new InMemoryUserRepository()
+                        () -> new InMemoryUserRepository(
+                                this.get(Clock.class)
+                        )
                 ),
 
                 new SimpleImmutableEntry<>(
@@ -131,6 +135,14 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
                 ),
 
                 new SimpleImmutableEntry<>(
+                        ElderUsersSearcher.class,
+                        () -> new ElderUsersSearcher(
+                                this.get(UserRepository.class),
+                                this.get(Clock.class)
+                        )
+                ),
+
+                new SimpleImmutableEntry<>(
                         CreateUserCommandHandler.class,
                         () -> new CreateUserCommandHandler(this.get(UserCreator.class))
                 ),
@@ -143,6 +155,11 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
                 new SimpleImmutableEntry<>(
                         FindUserQueryHandler.class,
                         () -> new FindUserQueryHandler(this.get(UserFinder.class))
+                ),
+
+                new SimpleImmutableEntry<>(
+                        SearchElderUsersQueryHandler.class,
+                        () -> new SearchElderUsersQueryHandler(this.get(ElderUsersSearcher.class))
                 )
         );
     }
