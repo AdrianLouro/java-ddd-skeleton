@@ -15,7 +15,6 @@ public final class LogQueryMiddleware extends Middleware<Query, Response> {
     public Response handle(final Query query) {
         final var queryName = query.getClass().getSimpleName();
 
-
         try {
             this.logger.info(String.format("Query <%s> received", queryName));
             final var response = this.handleNextMiddleware(query);

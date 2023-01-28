@@ -1,7 +1,6 @@
 package alouro.core.users.domain;
 
 
-import alouro.core.users.application.UserResponse;
 import alouro.shared.domain.AggregateRoot;
 import alouro.shared.domain.Clock;
 
@@ -28,15 +27,6 @@ public final class User extends AggregateRoot {
                 new UserId(id),
                 new UserName(name),
                 new UserBirthDate(birthDate, clock)
-        );
-    }
-
-    public static User fromUserResponse(final UserResponse userResponse, final Clock clock) {
-        return User.fromPrimitives(
-                userResponse.id(),
-                userResponse.name(),
-                userResponse.birthDate(),
-                clock
         );
     }
 
