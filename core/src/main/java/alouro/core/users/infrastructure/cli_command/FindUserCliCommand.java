@@ -1,4 +1,4 @@
-package alouro.core.users.infrastructure;
+package alouro.core.users.infrastructure.cli_command;
 
 import alouro.core.users.application.UserResponse;
 import alouro.core.users.application.find.FindUserQuery;

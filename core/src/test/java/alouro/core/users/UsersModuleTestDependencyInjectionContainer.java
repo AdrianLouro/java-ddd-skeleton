@@ -9,7 +9,7 @@ import alouro.core.users.application.rename.UserRenamer;
 import alouro.core.users.application.search_elder.ElderUsersSearcher;
 import alouro.core.users.application.search_elder.SearchElderUsersQueryHandler;
 import alouro.core.users.domain.UserRepository;
-import alouro.core.users.infrastructure.InMemoryUserRepository;
+import alouro.core.users.infrastructure.persistence.InMemoryUserRepository;
 import alouro.shared.domain.Clock;
 import alouro.shared.domain.Logger;
 import alouro.shared.domain.command.CommandBus;

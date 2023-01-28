@@ -1,4 +1,4 @@
-package alouro.core.users.infrastructure;
+package alouro.core.users.infrastructure.persistence;
 
 import alouro.core.users.UsersModuleInfrastructureTestCase;
 import alouro.core.users.domain.User;

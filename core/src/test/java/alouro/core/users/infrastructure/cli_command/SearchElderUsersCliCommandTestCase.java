@@ -1,4 +1,4 @@
-package alouro.core.users.infrastructure;
+package alouro.core.users.infrastructure.cli_command;
 
 import alouro.core.users.UsersModuleInfrastructureTestCase;
 import alouro.core.users.application.UsersResponseObjectMother;
