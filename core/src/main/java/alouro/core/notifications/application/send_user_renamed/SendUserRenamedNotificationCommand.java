@@ -1,42 +1,48 @@
-package alouro.core.users.application.create;
+package alouro.core.notifications.application.send_user_renamed;
 
 import alouro.shared.domain.command.Command;
 import alouro.shared.domain.message.Message;
 
 import java.io.Serializable;
-import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Objects;
 
-public final class CreateUserCommand extends Command {
+public final class SendUserRenamedNotificationCommand extends Command {
     private final String id;
-    private final String name;
-    private final String birthDate;
 
-    public CreateUserCommand(final String id, final String name, final String birthDate) {
+    public SendUserRenamedNotificationCommand(final String id) {
         super();
 
         this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
     }
 
-    public CreateUserCommand(
+    public SendUserRenamedNotificationCommand(
             final String id,
-            final String name,
-            final String birthDate,
             final String messageId,
             final String messageOccurredOn
     ) {
         super(messageId, messageOccurredOn);
 
         this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SendUserRenamedNotificationCommand that = (SendUserRenamedNotificationCommand) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
     public String messageName() {
-        return "user.create";
+        return "notification.send_user_renamed";
     }
 
     @Override
@@ -50,10 +56,8 @@ public final class CreateUserCommand extends Command {
             final String messageOccurredOn,
             final Map<String, Serializable> body
     ) {
-        return new CreateUserCommand(
+        return new SendUserRenamedNotificationCommand(
                 body.get("id").toString(),
-                body.get("name").toString(),
-                body.get("birthDate").toString(),
                 messageId,
                 messageOccurredOn
         );
@@ -62,21 +66,11 @@ public final class CreateUserCommand extends Command {
     @Override
     public Map<String, Serializable> toPrimitives() {
         return Map.ofEntries(
-                new SimpleImmutableEntry<>("id", this.id),
-                new SimpleImmutableEntry<>("name", this.name),
-                new SimpleImmutableEntry<>("birthDate", this.birthDate)
+                new AbstractMap.SimpleImmutableEntry<>("id", this.id)
         );
     }
 
     public String id() {
         return id;
-    }
-
-    public String name() {
-        return name;
-    }
-
-    public String birthDate() {
-        return birthDate;
     }
 }

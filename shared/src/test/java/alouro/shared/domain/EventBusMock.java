@@ -6,8 +6,7 @@ import alouro.shared.domain.event.EventBus;
 
 import java.util.List;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public final class EventBusMock extends Mock<EventBus> {
 
@@ -16,6 +15,6 @@ public final class EventBusMock extends Mock<EventBus> {
     }
 
     public void shouldHaveNotPublishedAnyDomainEvent() {
-        verify(this.mock(), times(1)).publish(List.of());
+        verify(this.mock(), only()).publish(List.of());
     }
 }

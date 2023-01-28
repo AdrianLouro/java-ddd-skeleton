@@ -1,5 +1,7 @@
 package alouro.core.users;
 
+import alouro.core.notifications.application.send_user_renamed.SendUserRenamedNotificationCommandHandler;
+import alouro.core.notifications.application.send_user_renamed.SendUserRenamedNotificationOnUserRenamedEventSubscriber;
 import alouro.core.users.application.create.CreateUserCommandHandler;
 import alouro.core.users.application.create.UserCreator;
 import alouro.core.users.application.find.FindUserQueryHandler;
@@ -8,6 +10,7 @@ import alouro.core.users.application.rename.RenameUserCommandHandler;
 import alouro.core.users.application.rename.UserRenamer;
 import alouro.core.users.application.search_elder.ElderUsersSearcher;
 import alouro.core.users.application.search_elder.SearchElderUsersQueryHandler;
+import alouro.core.users.domain.UserRenamedDomainEvent;
 import alouro.core.users.domain.UserRepository;
 import alouro.core.users.infrastructure.persistence.InMemoryUserRepository;
 import alouro.shared.domain.Clock;
@@ -16,6 +19,7 @@ import alouro.shared.domain.command.CommandBus;
 import alouro.shared.domain.command.HandleCommandMiddleware;
 import alouro.shared.domain.command.LogCommandMiddleware;
 import alouro.shared.domain.event.DomainEvent;
+import alouro.shared.domain.event.DomainEventSubscriber;
 import alouro.shared.domain.event.EventBus;
 import alouro.shared.domain.query.HandleQueryMiddleware;
 import alouro.shared.domain.query.LogQueryMiddleware;
@@ -24,12 +28,14 @@ import alouro.shared.infrastructure.StandardOutputLogger;
 import alouro.shared.infrastructure.SystemClock;
 import alouro.shared.infrastructure.command.InMemoryCommandBus;
 import alouro.shared.infrastructure.dependency_injection.MyDependencyInjectionContainer;
+import alouro.shared.infrastructure.event.InMemoryEventBus;
 import alouro.shared.infrastructure.query.InMemoryQueryBus;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+
 
 public final class UsersModuleTestDependencyInjectionContainer extends MyDependencyInjectionContainer {
 
@@ -79,12 +85,7 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
 
                 new SimpleImmutableEntry<>(
                         EventBus.class,
-                        () -> new EventBus() {
-                            @Override
-                            public void publish(List<DomainEvent> events) {
-
-                            }
-                        }
+                        () -> new InMemoryEventBus(this, this.getDomainEventsSubscriptions())
                 ),
 
                 new SimpleImmutableEntry<>(
@@ -160,6 +161,27 @@ public final class UsersModuleTestDependencyInjectionContainer extends MyDepende
                 new SimpleImmutableEntry<>(
                         SearchElderUsersQueryHandler.class,
                         () -> new SearchElderUsersQueryHandler(this.get(ElderUsersSearcher.class))
+                ),
+
+                new SimpleImmutableEntry<>(
+                        SendUserRenamedNotificationOnUserRenamedEventSubscriber.class,
+                        () -> new SendUserRenamedNotificationOnUserRenamedEventSubscriber(this.get(CommandBus.class))
+                ),
+
+                new SimpleImmutableEntry<>(
+                        SendUserRenamedNotificationCommandHandler.class,
+                        () -> new SendUserRenamedNotificationCommandHandler()
+                )
+        );
+    }
+
+    private Map<Class<? extends DomainEvent>, List<Class<? extends DomainEventSubscriber>>> getDomainEventsSubscriptions() {
+        return Map.ofEntries(
+                new SimpleImmutableEntry<>(
+                        UserRenamedDomainEvent.class,
+                        List.of(
+                                SendUserRenamedNotificationOnUserRenamedEventSubscriber.class
+                        )
                 )
         );
     }
